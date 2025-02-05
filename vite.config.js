@@ -15,25 +15,11 @@ export default defineConfig(() => {
           autoprefixer({}), // add options if needed
         ],
       },
-      preprocessorOptions: {
-        scss: {
-          quietDeps: true,
-          silenceDeprecations: ['import', 'legacy-js-api'],
-        },
-      },
     },
     esbuild: {
       loader: 'jsx',
-      include: /src\/.*\.jsx?$/,
+      include: /src\/.*\.jsx?$/, // JSX ve JS dosyalarını kapsar
       exclude: [],
-    },
-    optimizeDeps: {
-      force: true,
-      esbuildOptions: {
-        loader: {
-          '.js': 'jsx',
-        },
-      },
     },
     plugins: [react()],
     resolve: {
@@ -43,13 +29,6 @@ export default defineConfig(() => {
           replacement: `${path.resolve(__dirname, 'src')}/`,
         },
       ],
-      extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.scss'],
-    },
-    server: {
-      port: 5173,
-      proxy: {
-        // https://vitejs.dev/config/server-options.html
-      },
     },
   }
 })
