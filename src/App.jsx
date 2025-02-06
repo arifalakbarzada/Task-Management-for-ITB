@@ -5,13 +5,10 @@ import { useSelector } from 'react-redux'
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
 
-// We use those styles to show code examples, you should remove them in your application.
 import './scss/examples.scss'
 
-// Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
-// Pages
 
 
 const App = () => {
@@ -30,7 +27,7 @@ const App = () => {
     }
 
     setColorMode(storedTheme)
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <HashRouter>
