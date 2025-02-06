@@ -15,6 +15,7 @@ import {
   cilStar,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import Login from './views/login/Login'
 
 const _nav = [
   {
@@ -68,7 +69,12 @@ const _nav = [
     to: '/buttons',
     icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
     items: [
-  
+  {
+    component : CNavItem,
+    name : 'Login',
+    to : '/buttons/login',
+    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
+  }
     ],
   },
   {
