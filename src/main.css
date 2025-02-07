@@ -1,3 +1,4 @@
+@import "tailwindcss";
 body:has(.signup){
 	margin: 0;
 	padding: 0;
