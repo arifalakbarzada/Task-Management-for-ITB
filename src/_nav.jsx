@@ -68,14 +68,7 @@ const _nav = [
     name: 'Buttons',
     to: '/buttons',
     icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
-    items: [
-  {
-    component : CNavItem,
-    name : 'Login',
-    to : '/buttons/login',
-    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
-  }
-    ],
+    items: [],
   },
   {
     component: CNavGroup,
@@ -119,7 +112,18 @@ const _nav = [
     component: CNavGroup,
     name: 'Pages',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-    items: [],
+    items: [ {
+      component : CNavItem,
+      name : 'Login',
+      to : '/pages/login',
+      icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
+    },{
+      component : CNavItem,
+      name : 'Task Table',
+      to : '/pages/task-table',
+      icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    }
+  ],
   },
 ]
 

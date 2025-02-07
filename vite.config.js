@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import autoprefixer from 'autoprefixer'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(() => {
   return {
@@ -12,16 +13,16 @@ export default defineConfig(() => {
     css: {
       postcss: {
         plugins: [
-          autoprefixer({}), // add options if needed
+          autoprefixer({}),
         ],
       },
     },
     esbuild: {
       loader: 'jsx',
-      include: /src\/.*\.jsx?$/, // JSX ve JS dosyalarını kapsar
+      include: /src\/.*\.jsx?$/,
       exclude: [],
     },
-    plugins: [react()],
+    plugins: [react(),tailwindcss()],
     resolve: {
       alias: [
         {
