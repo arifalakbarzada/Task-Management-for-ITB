@@ -1,33 +1,48 @@
 import React from 'react'
+import { FaLock, FaUser } from 'react-icons/fa'
+import { RiArrowDropRightLine } from 'react-icons/ri'
 
 function Login() {
+    const handleLogin = () => {
+        console.log('Login button clicked')
+    }
     return (
-        <div className="main">
-            <input type="checkbox" id="chk" aria-hidden="true" />
-            <div className="signup">
-                <form>
-                    <label htmlFor="chk" aria-hidden="true">
-                        Sign up
-                    </label>
-                    <input type="text" name="txt" placeholder="User name" required="" />
-                    <input type="email" name="email" placeholder="Email" required="" />
-                    <input type="number" name="broj" placeholder="BrojTelefona" required="" />
-                    <input type="password" name="pswd" placeholder="Password" required="" />
-                    <button>Sign up</button>
-                </form>
-            </div>
-            <div className="login">
-                <form>
-                    <label htmlFor="chk" aria-hidden="true">
-                        Login
-                    </label>
-                    <input type="email" name="email" placeholder="Email" required="" />
-                    <input type="password" name="pswd" placeholder="Password" required="" />
-                    <button>Login</button>
-                </form>
+        <div className="login-container">
+            <div className="screen">
+                <div className="screen__content">
+                    <form className="login" onSubmit={() => {
+                        handleLogin()
+                    }}>
+                        <div className="login__field">
+                            <FaUser className='login__icon' />
+                            <input
+                                type="text"
+                                className="login__input"
+                                placeholder="User name / Email"
+                            />
+                        </div>
+                        <div className="login__field">
+                            <FaLock className='login__icon' />
+                            <input
+                                type="password"
+                                className="login__input"
+                                placeholder="Password"
+                            />
+                        </div>
+                        <button className="button login__submit">
+                            <span className="button__text">Log In Now</span>
+                            <RiArrowDropRightLine className='button__icon' />
+                        </button>
+                    </form>
+                </div>
+                <div className="screen__background">
+                    <span className="screen__background__shape screen__background__shape4" />
+                    <span className="screen__background__shape screen__background__shape3" />
+                    <span className="screen__background__shape screen__background__shape2" />
+                    <span className="screen__background__shape screen__background__shape1" />
+                </div>
             </div>
         </div>
-
     )
 }
 

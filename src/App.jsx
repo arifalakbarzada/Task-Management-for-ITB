@@ -6,6 +6,7 @@ import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
 
 import './scss/examples.scss'
+import Login from './views/login/Login'
 
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
@@ -41,6 +42,7 @@ const App = () => {
         <Routes>
    
           <Route path="*" name="Home" element={<DefaultLayout />} />
+          <Route path='/login' element = {<Login />}/>
         </Routes>
       </Suspense>
     </HashRouter>

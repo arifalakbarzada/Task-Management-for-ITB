@@ -23,10 +23,6 @@ const _nav = [
     name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
   },
   {
     component: CNavTitle,
@@ -50,60 +46,7 @@ const _nav = [
     to: '/theme/Qrafikdizayn',
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
-  {
-    component: CNavTitle,
-    name: 'Components',
-  },
-  {
-    component: CNavGroup,
-    name: 'Base',
-    to: '/base',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
-    items: [
-  
-    ],
-  },
-  {
-    component: CNavGroup,
-    name: 'Buttons',
-    to: '/buttons',
-    icon: <CIcon icon={cilCursor} customClassName="nav-icon" />,
-    items: [],
-  },
-  {
-    component: CNavGroup,
-    name: 'Forms',
-    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
-    items: [],
-  },
-  {
-    component: CNavItem,
-    name: 'Charts',
-    to: '/charts',
-    icon: <CIcon icon={cilChartPie} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavGroup,
-    name: 'Icons',
-    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-    items: [],
-  },
-  {
-    component: CNavGroup,
-    name: 'Notifications',
-    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
-    items: [],
-  },
-  {
-    component: CNavItem,
-    name: 'Widgets',
-    to: '/widgets',
-    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      text: 'NEW',
-    },
-  },
+
   {
     component: CNavTitle,
     name: 'Extras',
@@ -112,18 +55,18 @@ const _nav = [
     component: CNavGroup,
     name: 'Pages',
     icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
-    items: [ {
-      component : CNavItem,
-      name : 'Login',
-      to : '/pages/login',
-      icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
-    },{
-      component : CNavItem,
-      name : 'Task Table',
-      to : '/pages/task-table',
+    items: [{
+      component: CNavItem,
+      name: 'Task Table',
+      to: '/pages/task-table',
+      icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    }, {
+      component: CNavItem,
+      name: 'Register',
+      to: '/pages/register',
       icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     }
-  ],
+    ],
   },
 ]
 
