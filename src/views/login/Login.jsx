@@ -16,9 +16,9 @@ function Login() {
                         <div className="login__field">
                             <FaUser className='login__icon' />
                             <input
-                                type="text"
+                                type="email"
                                 className="login__input"
-                                placeholder="User name / Email"
+                                placeholder="Email"
                             />
                         </div>
                         <div className="login__field">
