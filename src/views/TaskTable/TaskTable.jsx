@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  MessageCircle, 
-  User, 
+import {
+  MessageCircle,
+  User,
   Edit,
   Trash,
   Eye,
-  MoreHorizontal 
+  MoreHorizontal
 } from 'lucide-react';
 
 const users = ['John Doe', 'Jane Smith', 'Mike Johnson'];
@@ -64,9 +64,9 @@ const SprintTaskManagement = () => {
 
   const handleStatusChange = (newStatus) => {
     if (selectedTask) {
-      const updatedTasks = tasks.map(task => 
-        task.id === selectedTask.id 
-          ? { ...task, status: newStatus } 
+      const updatedTasks = tasks.map(task =>
+        task.id === selectedTask.id
+          ? { ...task, status: newStatus }
           : task
       );
       setTasks(updatedTasks);
@@ -92,7 +92,7 @@ const SprintTaskManagement = () => {
   };
 
   const handleEditTask = () => {
-    const updatedTasks = tasks.map(task => 
+    const updatedTasks = tasks.map(task =>
       task.id === selectedTask.id ? selectedTask : task
     );
     setTasks(updatedTasks);
@@ -103,7 +103,7 @@ const SprintTaskManagement = () => {
     setTasks(tasks.filter(task => task.id !== taskId));
   };
 
-  return (
+  return tasks.length>0? (
     <div className="flex flex-col h-screen">
       <div className="flex-grow overflow-hidden">
         <table className="w-full border-collapse">
@@ -130,7 +130,7 @@ const SprintTaskManagement = () => {
                   </div>
                 </td>
                 <td className="p-2">
-                  <span 
+                  <span
                     onClick={() => {
                       setSelectedTask(task);
                       setIsStatusModalOpen(true);
@@ -142,7 +142,7 @@ const SprintTaskManagement = () => {
                 </td>
                 <td className="p-2 hidden md:table-cell">{formatDate(task.deadline)}</td>
                 <td className="p-2 relative">
-                  <button 
+                  <button
                     onClick={() => setOpenActionMenuId(openActionMenuId === task.id ? null : task.id)}
                     className="hover:bg-gray-200 p-1 rounded"
                   >
@@ -150,7 +150,7 @@ const SprintTaskManagement = () => {
                   </button>
                   {openActionMenuId === task.id && (
                     <div className="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-10">
-                      <button 
+                      <button
                         onClick={() => {
                           setSelectedTask(task);
                           setIsViewTaskModalOpen(true);
@@ -160,9 +160,9 @@ const SprintTaskManagement = () => {
                       >
                         <Eye size={16} className="mr-2" /> Görüntüle
                       </button>
-                      <button 
+                      <button
                         onClick={() => {
-                          setSelectedTask({...task});
+                          setSelectedTask({ ...task });
                           setIsEditTaskModalOpen(true);
                           setOpenActionMenuId(null);
                         }}
@@ -170,7 +170,7 @@ const SprintTaskManagement = () => {
                       >
                         <Edit size={16} className="mr-2" /> Düzenle
                       </button>
-                      <button 
+                      <button
                         onClick={() => {
                           handleDeleteTask(task.id);
                           setOpenActionMenuId(null);
@@ -187,7 +187,7 @@ const SprintTaskManagement = () => {
           </tbody>
         </table>
         <div className="p-2 bg-gray-100 flex items-center">
-          <button 
+          <button
             onClick={() => setIsAddTaskModalOpen(true)}
             className="text-blue-500 flex items-center"
           >
@@ -196,14 +196,11 @@ const SprintTaskManagement = () => {
         </div>
       </div>
 
-      {/* Tüm modal kodları önceki örnekle aynı */}
-      {/* (Status, Add Task, View Task, Edit Task modalları) */}
-       {/* Status Change Modal */}
-       {isStatusModalOpen && (
+      {isStatusModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white rounded-lg p-6 w-64">
             <h3 className="text-lg font-semibold mb-4">Durumu Değiştir</h3>
-            <div className="space-y-2">
+            <div className="space-y-2 m-[10px]">
               {['beklemede', 'hazir', 'hazir degil'].map((status) => (
                 <button
                   key={status}
@@ -214,7 +211,7 @@ const SprintTaskManagement = () => {
                 </button>
               ))}
             </div>
-            <button 
+            <button
               onClick={() => setIsStatusModalOpen(false)}
               className="mt-4 w-full bg-gray-200 py-2 rounded"
             >
@@ -234,18 +231,18 @@ const SprintTaskManagement = () => {
                 type="text"
                 placeholder="Görev Başlığı"
                 value={newTask.title}
-                onChange={(e) => setNewTask({...newTask, title: e.target.value})}
+                onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
                 className="w-full p-2 border rounded"
               />
               <textarea
                 placeholder="Görev Açıklaması"
                 value={newTask.description}
-                onChange={(e) => setNewTask({...newTask, description: e.target.value})}
+                onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
                 className="w-full p-2 border rounded h-24"
               />
               <select
                 value={newTask.owner}
-                onChange={(e) => setNewTask({...newTask, owner: e.target.value})}
+                onChange={(e) => setNewTask({ ...newTask, owner: e.target.value })}
                 className="w-full p-2 border rounded"
               >
                 <option value="">Kullanıcı Seçin</option>
@@ -256,18 +253,18 @@ const SprintTaskManagement = () => {
               <input
                 type="date"
                 value={newTask.deadline.toISOString().split('T')[0]}
-                onChange={(e) => setNewTask({...newTask, deadline: new Date(e.target.value)})}
+                onChange={(e) => setNewTask({ ...newTask, deadline: new Date(e.target.value) })}
                 className="w-full p-2 border rounded"
               />
             </div>
             <div className="flex justify-end space-x-2 mt-4">
-              <button 
+              <button
                 onClick={() => setIsAddTaskModalOpen(false)}
                 className="bg-gray-200 py-2 px-4 rounded"
               >
                 İptal
               </button>
-              <button 
+              <button
                 onClick={handleAddTask}
                 className="bg-blue-500 text-white py-2 px-4 rounded"
               >
@@ -284,7 +281,7 @@ const SprintTaskManagement = () => {
           <div className="bg-white rounded-lg p-6 w-96">
             <h3 className="text-lg font-semibold mb-4">{selectedTask.title}</h3>
             <p className="mb-4">{selectedTask.description}</p>
-            <button 
+            <button
               onClick={() => setIsViewTaskModalOpen(false)}
               className="bg-blue-500 text-white py-2 px-4 rounded"
             >
@@ -304,18 +301,18 @@ const SprintTaskManagement = () => {
                 type="text"
                 placeholder="Görev Başlığı"
                 value={selectedTask.title}
-                onChange={(e) => setSelectedTask({...selectedTask, title: e.target.value})}
+                onChange={(e) => setSelectedTask({ ...selectedTask, title: e.target.value })}
                 className="w-full p-2 border rounded"
               />
               <textarea
                 placeholder="Görev Açıklaması"
                 value={selectedTask.description}
-                onChange={(e) => setSelectedTask({...selectedTask, description: e.target.value})}
+                onChange={(e) => setSelectedTask({ ...selectedTask, description: e.target.value })}
                 className="w-full p-2 border rounded h-24"
               />
               <select
                 value={selectedTask.owner}
-                onChange={(e) => setSelectedTask({...selectedTask, owner: e.target.value})}
+                onChange={(e) => setSelectedTask({ ...selectedTask, owner: e.target.value })}
                 className="w-full p-2 border rounded"
               >
                 {users.map(user => (
@@ -325,18 +322,18 @@ const SprintTaskManagement = () => {
               <input
                 type="date"
                 value={selectedTask.deadline.toISOString().split('T')[0]}
-                onChange={(e) => setSelectedTask({...selectedTask, deadline: new Date(e.target.value)})}
+                onChange={(e) => setSelectedTask({ ...selectedTask, deadline: new Date(e.target.value) })}
                 className="w-full p-2 border rounded"
               />
             </div>
             <div className="flex justify-end space-x-2 mt-4">
-              <button 
+              <button
                 onClick={() => setIsEditTaskModalOpen(false)}
                 className="bg-gray-200 py-2 px-4 rounded"
               >
                 İptal
               </button>
-              <button 
+              <button
                 onClick={handleEditTask}
                 className="bg-blue-500 text-white py-2 px-4 rounded"
               >
@@ -347,7 +344,68 @@ const SprintTaskManagement = () => {
         </div>
       )}
     </div>
-  );
+  ):<>
+  There is not any task
+  <div className="p-2 bg-gray-100 flex items-center">
+          <button
+            onClick={() => setIsAddTaskModalOpen(true)}
+            className="text-blue-500 flex items-center"
+          >
+            + görev ekle
+          </button>  {isAddTaskModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-lg p-6 w-96">
+            <h3 className="text-lg font-semibold mb-4">Görev Ekle</h3>
+            <div className="space-y-4">
+              <input
+                type="text"
+                placeholder="Görev Başlığı"
+                value={newTask.title}
+                onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                className="w-full p-2 border rounded"
+              />
+              <textarea
+                placeholder="Görev Açıklaması"
+                value={newTask.description}
+                onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                className="w-full p-2 border rounded h-24"
+              />
+              <select
+                value={newTask.owner}
+                onChange={(e) => setNewTask({ ...newTask, owner: e.target.value })}
+                className="w-full p-2 border rounded"
+              >
+                <option value="">Kullanıcı Seçin</option>
+                {users.map(user => (
+                  <option key={user} value={user}>{user}</option>
+                ))}
+              </select>
+              <input
+                type="date"
+                value={newTask.deadline.toISOString().split('T')[0]}
+                onChange={(e) => setNewTask({ ...newTask, deadline: new Date(e.target.value) })}
+                className="w-full p-2 border rounded"
+              />
+            </div>
+            <div className="flex justify-end space-x-2 mt-4">
+              <button
+                onClick={() => setIsAddTaskModalOpen(false)}
+                className="bg-gray-200 py-2 px-4 rounded"
+              >
+                İptal
+              </button>
+              <button
+                onClick={handleAddTask}
+                className="bg-blue-500 text-white py-2 px-4 rounded"
+              >
+                Ekle
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+        </div>
+  </>;
 };
 
 export default SprintTaskManagement;
