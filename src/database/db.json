@@ -1,0 +1,114 @@
+{
+  "users": [
+    {
+      "id": "emkwjkckfew",
+      "name": "John",
+      "surName": "Doe",
+      "fatherName": "Timmy",
+      "departmentName": "IT Departamenti",
+      "email": "johndoe0044@gmail.com",
+      "position": "Software Developer"
+    },
+    {
+      "id" : "slemlcdfkm",
+      "name" : "Jane",
+      "surName" : "Smith",
+      "fatherName" : "Jack",
+      "departmentName" : "İnsan Resursları Departamenti",
+      "position" : "HR Meneceri",
+      "email" : "janesmail52085@gmail.com"
+    }
+  ],
+  "departments": [
+    {
+      "id": 1,
+      "name": "IT Departamenti",
+      "positions": [
+        {
+          "id": 11,
+          "name": "Software Developer"
+        },
+        {
+          "id": 12,
+          "name": "IT Support"
+        },
+        {
+          "id": 13,
+          "name": "Network Administrator"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Maliyyə Departamenti",
+      "positions": [
+        {
+          "id": 21,
+          "name": "Mühasib"
+        },
+        {
+          "id": 22,
+          "name": "Maliyyə Direktoru"
+        },
+        {
+          "id": 23,
+          "name": "Maliyyə Analitiki"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "İnsan Resursları Departamenti",
+      "positions": [
+        {
+          "id": 37,
+          "name": "HR Meneceri"
+        },
+        {
+          "id": 38,
+          "name": "Təlim Koordinatoru"
+        },
+        {
+          "id": 39,
+          "name": "İşə Qəbul Mütəxəssisi"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Satış Departamenti",
+      "positions": [
+        {
+          "id": 410,
+          "name": "Satış Meneceri"
+        },
+        {
+          "id": 411,
+          "name": "Satış Nümayəndəsi"
+        },
+        {
+          "id": 412,
+          "name": "Müştəri Dəstəyi"
+        }
+      ]
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Task 1",
+      "description": "Detaylı task açıklaması buraya gelecek.",
+      "owner": "John Doe",
+      "status": "beklemede",
+      "deadline": "2024-03-15"
+    },
+    {
+      "id": 2,
+      "title": "Task 2",
+      "description": "İkinci task için açıklama metni.",
+      "owner": "Jane Smith",
+      "status": "hazir",
+      "deadline": "2024-02-20"
+    }
+  ]
+}
