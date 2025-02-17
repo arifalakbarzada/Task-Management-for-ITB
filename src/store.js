@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
-
+import departmentReducer from './toolkit/departmentSlice'
 const initialState = {
   sidebarShow: true,
   theme: 'light',
@@ -18,6 +18,8 @@ const appSlice = createSlice({
 const store = configureStore({
   reducer: {
     app: appSlice.reducer,
+    departmentReducer : departmentReducer,
+    
   },
 });
 

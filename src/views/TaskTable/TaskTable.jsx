@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MessageCircle,
   User,
@@ -7,6 +7,7 @@ import {
   Eye,
   MoreHorizontal
 } from 'lucide-react';
+import { departmentApiRequests, taskApiRequests, userApiRequests } from '../../services/base';
 
 const users = ['John Doe', 'Jane Smith', 'Mike Johnson'];
 
@@ -29,8 +30,10 @@ const initialTasks = [
   }
 ];
 
+
 const SprintTaskManagement = () => {
   const [tasks, setTasks] = useState(initialTasks);
+  const [usersArr, setUsersArr] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
   const [isAddTaskModalOpen, setIsAddTaskModalOpen] = useState(false);
@@ -102,6 +105,11 @@ const SprintTaskManagement = () => {
   const handleDeleteTask = (taskId) => {
     setTasks(tasks.filter(task => task.id !== taskId));
   };
+  useEffect( () => {
+    departmentApiRequests.getAllDepartments().then(res=>setUsersArr(res))
+  }, [])
+  console.log(usersArr)
+  
 
   return tasks.length>0? (
     <div className="flex flex-col h-screen">
