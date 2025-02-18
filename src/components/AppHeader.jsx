@@ -57,63 +57,7 @@ const AppHeader = () => {
         >
           <CIcon icon={cilMenu} size="lg" />
         </CHeaderToggler>
-        <CHeaderNav className="d-none d-md-flex">
-          <CNavItem>
-            <CNavLink to="/dashboard" as={NavLink}>
-              Dashboard
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Tasks</CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
-          </CNavItem>
-        </CHeaderNav>
-        <CHeaderNav className="ms-auto">
-          {[cilBell, cilList, cilEnvelopeOpen].map((icon, index) => (
-            <CNavItem key={index}>
-              <CNavLink href="#">
-                <CIcon icon={icon} size="lg" />
-              </CNavLink>
-            </CNavItem>
-          ))}
-        </CHeaderNav>
         <CHeaderNav>
-          <li className="nav-item py-1">
-            <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
-          </li>
-          <CDropdown variant="nav-item" placement="bottom-end">
-            <CDropdownToggle caret={false}>
-              <CIcon
-                icon={
-                  colorMode === 'dark'
-                    ? cilMoon
-                    : colorMode === 'auto'
-                    ? cilContrast
-                    : cilSun
-                }
-                size="lg"
-              />
-            </CDropdownToggle>
-            <CDropdownMenu>
-              {['light', 'dark', 'auto'].map((mode, index) => (
-                <CDropdownItem
-                  key={index}
-                  active={colorMode === mode}
-                  className="d-flex align-items-center"
-                  as="button"
-                  type="button"
-                  onClick={() => setColorMode(mode)}
-                >
-                  <CIcon className="me-2" icon={mode === 'light' ? cilSun : mode === 'dark' ? cilMoon : cilContrast} size="lg" /> {mode.charAt(0).toUpperCase() + mode.slice(1)}
-                </CDropdownItem>
-              ))}
-            </CDropdownMenu>
-          </CDropdown>
-          <li className="nav-item py-1">
-            <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
-          </li>
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>
