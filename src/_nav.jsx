@@ -16,7 +16,7 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Extras',
+    name: 'Admin',
   },
   {
     component: CNavGroup,
@@ -31,6 +31,12 @@ const _nav = [
       component: CNavItem,
       name: 'Register',
       to: '/pages/register',
+      icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    },
+    {
+      component: CNavItem,
+      name: 'Edit Department',
+      to: '/pages/editDepartment',
       icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
     }
     ],

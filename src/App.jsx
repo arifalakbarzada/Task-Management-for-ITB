@@ -31,7 +31,8 @@ const App = () => {
   }, [])
 
   return (
-    <BrowserRouter>
+    <>
+   <BrowserRouter>
       <Suspense
         fallback={
           <div className="pt-3 text-center">
@@ -45,7 +46,9 @@ const App = () => {
           <Route path='/login' element = {<Login />}/>
         </Routes>
       </Suspense>
-    </BrowserRouter>
+    </BrowserRouter> 
+    </>
+    
   )
 }
 

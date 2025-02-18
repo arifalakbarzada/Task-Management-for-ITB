@@ -105,13 +105,13 @@ const SprintTaskManagement = () => {
   const handleDeleteTask = (taskId) => {
     setTasks(tasks.filter(task => task.id !== taskId));
   };
-  useEffect( () => {
-    departmentApiRequests.getAllDepartments().then(res=>setUsersArr(res))
+  useEffect(() => {
+    departmentApiRequests.getAllDepartments().then(res => setUsersArr(res))
   }, [])
   console.log(usersArr)
-  
 
-  return tasks.length>0? (
+
+  return tasks.length > 0 ? (
     <div className="flex flex-col h-screen">
       <div className="flex-grow overflow-hidden">
         <table className="w-full border-collapse">
@@ -352,15 +352,15 @@ const SprintTaskManagement = () => {
         </div>
       )}
     </div>
-  ):<>
-  There is not any task
-  <div className="p-2 bg-gray-100 flex items-center">
-          <button
-            onClick={() => setIsAddTaskModalOpen(true)}
-            className="text-blue-500 flex items-center"
-          >
-            + görev ekle
-          </button>  {isAddTaskModalOpen && (
+  ) : <>
+    There is not any task
+    <div className="p-2 bg-gray-100 flex items-center">
+      <button
+        onClick={() => setIsAddTaskModalOpen(true)}
+        className="text-blue-500 flex items-center"
+      >
+        + görev ekle
+      </button>  {isAddTaskModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white rounded-lg p-6 w-96">
             <h3 className="text-lg font-semibold mb-4">Görev Ekle</h3>
@@ -412,7 +412,7 @@ const SprintTaskManagement = () => {
           </div>
         </div>
       )}
-        </div>
+    </div>
   </>;
 };
 
