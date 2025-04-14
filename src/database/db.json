@@ -53,7 +53,7 @@
       "title": "Task 1",
       "description": "Detaylı task açıklaması buraya gelecek.",
       "owner": "John Doe",
-      "status": "Pending",
+      "status": "In Progress",
       "deadline": "2025-04-18",
       "userId": "emkwjkckfew"
     },
