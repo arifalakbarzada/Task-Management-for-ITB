@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { editTask } from "../../../toolkit/taskSlice";
 import {
@@ -10,12 +10,19 @@ import {
   CButton,
 } from "@coreui/react";
 import { Eye } from "lucide-react";
+import { departmentApiRequests } from "../../../services/base";
+import { setAllDepartments } from "../../../toolkit/departmentSlice";
 
 const TaskView = () => {
   const tasks = useSelector((state) => state.tasks.items);
   const user = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
   const [viewingTask, setViewingTask] = useState(null);
+  useEffect(() => {
+    departmentApiRequests.getAllDepartments().then(res => {
+      dispatch(setAllDepartments(res))
+    })
+  }, [dispatch])
 
   const handleStatusChange = (status, task) => {
     dispatch(editTask({ ...task, status }));
@@ -52,7 +59,7 @@ const TaskView = () => {
           </tr>
         </thead>
         <tbody>
-          {tasks.filter((task)=>task.userId === user.id).map((task) => {
+          {tasks.filter((task) => task.userId === user.id).map((task) => {
             const deadlinePassed = isDeadlinePassed(task.deadline);
             return (
               <tr key={task.id} className="border-t">
@@ -71,9 +78,8 @@ const TaskView = () => {
                       !deadlinePassed && handleStatusChange(e.target.value, task)
                     }
                     disabled={deadlinePassed}
-                    className={`border rounded-md p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                      deadlinePassed ? "opacity-50 cursor-not-allowed" : ""
-                    }`}
+                    className={`border rounded-md p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${deadlinePassed ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                   >
                     <option value="Pending">Pending</option>
                     <option value="In Progress">In Progress</option>
