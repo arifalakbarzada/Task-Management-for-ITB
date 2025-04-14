@@ -1,5 +1,7 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import departmentReducer from './toolkit/departmentSlice'
+import userReducer from './toolkit/userSlice'
+import taskReducer from './toolkit/taskSlice';
 const initialState = {
   sidebarShow: true,
   theme: 'light',
@@ -18,8 +20,9 @@ const appSlice = createSlice({
 const store = configureStore({
   reducer: {
     app: appSlice.reducer,
-    departmentReducer : departmentReducer,
-    
+    department : departmentReducer,
+    users: userReducer,
+    tasks : taskReducer
   },
 });
 

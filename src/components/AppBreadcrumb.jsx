@@ -4,10 +4,12 @@ import { useLocation } from 'react-router-dom'
 import routes from '../routes'
 
 import { CBreadcrumb, CBreadcrumbItem } from '@coreui/react'
+import { useSelector } from 'react-redux'
 
 const AppBreadcrumb = () => {
   const currentLocation = useLocation().pathname
 
+  const role = useSelector((state) => state.users.user)
   const getRouteName = (pathname, routes) => {
     const currentRoute = routes.find((route) => route.path === pathname)
     return currentRoute ? currentRoute.name : false
@@ -33,7 +35,7 @@ const AppBreadcrumb = () => {
 
   return (
     <CBreadcrumb className="my-0">
-      <CBreadcrumbItem href="/">Home</CBreadcrumbItem>
+      <CBreadcrumbItem href={role === 'admin' ? "/admin/dashboard" : '/view-task'}>Home</CBreadcrumbItem>
       {breadcrumbs.map((breadcrumb, index) => {
         return (
           <CBreadcrumbItem

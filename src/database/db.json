@@ -4,111 +4,85 @@
       "id": "emkwjkckfew",
       "name": "John",
       "surName": "Doe",
-      "fatherName": "Timmy",
+      "fatherName": "Tommy",
       "departmentName": "IT Departamenti",
+      "password": "FAakixdns51541@",
       "email": "johndoe0044@gmail.com",
-      "position": "Software Developer"
+      "position": "Software Developer",
+      "role": "user"
     },
     {
-      "id" : "slemlcdfkm",
-      "name" : "Jane",
-      "surName" : "Smith",
-      "fatherName" : "Jack",
-      "departmentName" : "İnsan Resursları Departamenti",
-      "position" : "HR Meneceri",
-      "email" : "janesmail52085@gmail.com"
+      "id": "slemlcdfkm",
+      "name": "Jane",
+      "surName": "Smith",
+      "fatherName": "Jack",
+      "departmentName": "İnsan Resursları Departamenti",
+      "password": "Wokdklesnkwl209833UEh",
+      "position": "HR Meneceri",
+      "email": "janesmail52085@gmail.com",
+      "role": "user"
+    },
+    {
+      "id": "esdrftgyhujiuouuytrd",
+      "role": "admin",
+      "email": "admin@itbtech.com",
+      "password": "Admin4546479544fjiuujlhkujjgyfgtd"
     }
   ],
   "departments": [
     {
-      "id": 1,
-      "name": "IT Departamenti",
-      "positions": [
-        {
-          "id": 11,
-          "name": "Software Developer"
-        },
-        {
-          "id": 12,
-          "name": "IT Support"
-        },
-        {
-          "id": 13,
-          "name": "Network Administrator"
-        }
-      ]
+      "id": "1",
+      "name": "IT Departamenti"
     },
     {
-      "id": 2,
-      "name": "Maliyyə Departamenti",
-      "positions": [
-        {
-          "id": 21,
-          "name": "Mühasib"
-        },
-        {
-          "id": 22,
-          "name": "Maliyyə Direktoru"
-        },
-        {
-          "id": 23,
-          "name": "Maliyyə Analitiki"
-        }
-      ]
+      "id": "2",
+      "name": "Maliyyə Departamenti"
     },
     {
-      "id": 3,
-      "name": "İnsan Resursları Departamenti",
-      "positions": [
-        {
-          "id": 37,
-          "name": "HR Meneceri"
-        },
-        {
-          "id": 38,
-          "name": "Təlim Koordinatoru"
-        },
-        {
-          "id": 39,
-          "name": "İşə Qəbul Mütəxəssisi"
-        }
-      ]
+      "id": "3",
+      "name": "İnsan Resursları Departamenti"
     },
     {
-      "id": 4,
-      "name": "Satış Departamenti",
-      "positions": [
-        {
-          "id": 410,
-          "name": "Satış Meneceri"
-        },
-        {
-          "id": 411,
-          "name": "Satış Nümayəndəsi"
-        },
-        {
-          "id": 412,
-          "name": "Müştəri Dəstəyi"
-        }
-      ]
+      "id": "4",
+      "name": "Satış Departamenti"
     }
   ],
   "tasks": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Task 1",
       "description": "Detaylı task açıklaması buraya gelecek.",
       "owner": "John Doe",
-      "status": "beklemede",
-      "deadline": "2024-03-15"
+      "status": "Pending",
+      "deadline": "2025-04-18",
+      "userId": "emkwjkckfew"
     },
     {
-      "id": 2,
+      "id": "2",
       "title": "Task 2",
       "description": "İkinci task için açıklama metni.",
       "owner": "Jane Smith",
-      "status": "hazir",
-      "deadline": "2024-02-20"
+      "status": "Completed",
+      "deadline": "2024-03-10",
+      "userId": "slemlcdfkm"
+    },
+    {
+      "id": "b64c",
+      "title": "Task 3",
+      "description": "Description for Task 3",
+      "owner": "Jane Smith",
+      "deadline": "2025-05-11",
+      "status": "Pending",
+      "userId": "slemlcdfkm"
+    },
+    {
+      "id": "d3b4",
+      "title": "ijokdslf",
+      "description": "dsvgfbfre",
+      "owner": "John Doe",
+      "deadline": "2025-04-16",
+      "status": "Pending",
+      "userId": "emkwjkckfew"
     }
   ]
 }
