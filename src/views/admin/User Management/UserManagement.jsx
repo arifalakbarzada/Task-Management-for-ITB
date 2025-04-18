@@ -18,6 +18,7 @@ import {
   CCol,
   CRow
 } from '@coreui/react';
+import { FaEdit, FaTrash, FaEye } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
 import { editUser, removeUser } from '../../../toolkit/userSlice';
@@ -94,28 +95,58 @@ const UserManagement = () => {
         <CTable responsive hover bordered>
           <CTableHead color="light">
             <CTableRow>
-            <CTableHeaderCell className="min-w-[100px] block sm:table-cell">Name</CTableHeaderCell>
-<CTableHeaderCell className="min-w-[100px] block sm:table-cell">Surname</CTableHeaderCell>
-<CTableHeaderCell className="hidden xl:table-cell">Department</CTableHeaderCell>
-<CTableHeaderCell className="hidden xl:table-cell">Email</CTableHeaderCell>
-<CTableHeaderCell className="hidden xl:table-cell">Position</CTableHeaderCell>
-<CTableHeaderCell className="min-w-[120px] block sm:table-cell">Actions</CTableHeaderCell>
+              <CTableHeaderCell className="table-cell overflow-x-auto">Name</CTableHeaderCell>
+              <CTableHeaderCell className="table-cell overflow-x-auto">Surname</CTableHeaderCell>
+              <CTableHeaderCell className="hidden xl:table-cell">Department</CTableHeaderCell>
+              <CTableHeaderCell className="hidden xl:table-cell">Email</CTableHeaderCell>
+              <CTableHeaderCell className="hidden xl:table-cell">Position</CTableHeaderCell>
+              <CTableHeaderCell className=" table-cell">Actions</CTableHeaderCell>
 
             </CTableRow>
           </CTableHead>
           <CTableBody>
             {users.map((user) => user.role === 'user' && (
               <CTableRow key={user.id}>
-<CTableDataCell className="block sm:table-cell"><span>{user.name}</span></CTableDataCell>
-<CTableDataCell className="block sm:table-cell"><span>{user.surName}</span></CTableDataCell>
-<CTableDataCell className="hidden xl:table-cell whitespace-nowrap"><span className='text-ellipsis'>{user.departmentName}</span></CTableDataCell>
-<CTableDataCell className="hidden xl:table-cell whitespace-nowrap">{user.email}</CTableDataCell>
-<CTableDataCell className="hidden xl:table-cell whitespace-nowrap">{user.position}</CTableDataCell>
-<CTableDataCell className="block sm:table-cell whitespace-nowrap">
-  <CButton color="info" size="sm" className="me-2" onClick={() => handleEditClick(user)}>Edit</CButton>
-  <CButton color="danger" size="sm" className="me-2" onClick={() => handleDeleteClick(user.id)}>Delete</CButton>
-  <CButton color="warning" size="sm" onClick={() => handleViewClick(user)}>View</CButton>
-</CTableDataCell>
+                <CTableDataCell className="table-cell"><span>{user.name}</span></CTableDataCell>
+                <CTableDataCell className="table-cell"><span>{user.surName}</span></CTableDataCell>
+                <CTableDataCell className="hidden xl:table-cell whitespace-nowrap"><span className='text-ellipsis'>{user.departmentName}</span></CTableDataCell>
+                <CTableDataCell className="hidden xl:table-cell whitespace-nowrap">{user.email}</CTableDataCell>
+                <CTableDataCell className="hidden xl:table-cell whitespace-nowrap">{user.position}</CTableDataCell>
+
+                <CTableDataCell className="table-cell whitespace-nowrap">
+                  <CButton
+                    color="info"
+                    size="sm"
+                    className="text-xs me-1 px-2 py-1"
+                    onClick={() => handleEditClick(user)}
+                  >
+                    {/* Icon for small screens */}
+                    <FaEdit className="block text-white max-[397px]:inline max-[397px]:me-0 hidden" />
+                    {/* Text for larger screens */}
+                    <span className="max-[397px]:hidden">Edit</span>
+                  </CButton>
+
+                  <CButton
+                    color="danger"
+                    size="sm"
+                    className="text-xs  me-1 px-2 py-1"
+                    onClick={() => handleDeleteClick(user.id)}
+                  >
+                    <FaTrash className="block max-[397px]:inline max-[397px]:me-0 text-white hidden" />
+                    <span className="max-[397px]:hidden">Delete</span>
+                  </CButton>
+
+                  <CButton
+                    color="warning"
+                    size="sm"
+                    className="inline-block xl:hidden text-xs px-2 py-1"
+                    onClick={() => handleViewClick(user)}
+                  >
+                    <FaEye className="block text-white max-[397px]:inline max-[397px]:me-0 hidden" />
+                    <span className="max-[397px]:hidden">View</span>
+                  </CButton>
+                </CTableDataCell>
+
 
               </CTableRow>
             ))}
@@ -272,8 +303,8 @@ const UserManagement = () => {
             </CButton>
           </CModalFooter>
         </CModal>
-          
-          {/* View User Modal */}
+
+        {/* View User Modal */}
         <CModal visible={viewModalVisible} onClose={() => setViewModalVisible(false)} backdrop="static" size="lg">
           <CModalHeader closeButton>
             <CModalTitle>User Details</CModalTitle>

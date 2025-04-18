@@ -16,7 +16,7 @@ import {
   CCardBody,
   CCardHeader,
 } from '@coreui/react';
-import { Pencil, Trash } from 'lucide-react';
+import { Pencil, Plus, Trash } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -111,28 +111,35 @@ const DepartmentManagement = () => {
     <div className="m-4">
       <CCard>
         <CCardHeader className="d-flex justify-content-between align-items-center">
-          <h5 className="mb-0">Departments</h5>
+          <h5 className="mb-0 whitespace-nowrap">Departments</h5>
           <CButton
-            color="primary"
-            onClick={() => setIsAddDepartmentOpen(true)}
-          >
-            Add Department
-          </CButton>
+  color="primary"
+  className="whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis px-2 py-1 text-sm sm:text-base"
+  onClick={() => setIsAddDepartmentOpen(true)}
+>
+  <span className="hidden xs:inline">Add Department</span>
+  <span className="inline xs:hidden">
+    <Plus size={16} />
+  </span>
+</CButton>
+
         </CCardHeader>
-        <CCardBody>
+        <CCardBody className='py-0 px-1'>
           <CTable hover responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell>Department Name</CTableHeaderCell>
+                <CTableHeaderCell className='whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis'>Department Name</CTableHeaderCell>
                 <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               {departments.map(department => (
                 <CTableRow key={department.id}>
-                  <CTableDataCell>{department.name}</CTableDataCell>
+                  <CTableDataCell className="whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis">
+                    <span className="">{department.name}</span>
+                  </CTableDataCell>
                   <CTableDataCell>
-                    <div className="flex gap-2">
+                    <div className="flex gap-1">
                       <CButton
                         color="primary"
                         variant="outline"
