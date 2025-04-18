@@ -4,7 +4,7 @@ import { userApiRequests } from "../services/base"
 const initialState = {
     items: [],
     user: JSON.parse(localStorage.getItem("user")) || {
-        "role": "user",
+        "role": "admin",
         "id": "emkwjkckfew",
     },
 }

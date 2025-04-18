@@ -23,6 +23,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { editUser, removeUser } from '../../../toolkit/userSlice';
 
 const UserManagement = () => {
+  const [viewModalVisible, setViewModalVisible] = useState(false);
+  const [viewUser, setViewUser] = useState(null);
+
+  const handleViewClick = (user) => {
+    setViewUser(user);
+    setViewModalVisible(true);
+  };
   const users = useSelector((state) => state.users.items)
   const departments = useSelector((state) => state.department.items)
   const dispatch = useDispatch()
@@ -87,41 +94,29 @@ const UserManagement = () => {
         <CTable responsive hover bordered>
           <CTableHead color="light">
             <CTableRow>
-              <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Surname</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Father's Name</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Department</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Email</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Position</CTableHeaderCell>
-              <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+            <CTableHeaderCell className="min-w-[100px] block sm:table-cell">Name</CTableHeaderCell>
+<CTableHeaderCell className="min-w-[100px] block sm:table-cell">Surname</CTableHeaderCell>
+<CTableHeaderCell className="hidden xl:table-cell">Department</CTableHeaderCell>
+<CTableHeaderCell className="hidden xl:table-cell">Email</CTableHeaderCell>
+<CTableHeaderCell className="hidden xl:table-cell">Position</CTableHeaderCell>
+<CTableHeaderCell className="min-w-[120px] block sm:table-cell">Actions</CTableHeaderCell>
+
             </CTableRow>
           </CTableHead>
           <CTableBody>
             {users.map((user) => user.role === 'user' && (
               <CTableRow key={user.id}>
-                <CTableDataCell>{user.name}</CTableDataCell>
-                <CTableDataCell>{user.surName}</CTableDataCell>
-                <CTableDataCell>{user.fatherName}</CTableDataCell>
-                <CTableDataCell>{user.departmentName}</CTableDataCell>
-                <CTableDataCell>{user.email}</CTableDataCell>
-                <CTableDataCell>{user.position}</CTableDataCell>
-                <CTableDataCell>
-                  <CButton
-                    color="info"
-                    size="sm"
-                    className="me-2"
-                    onClick={() => handleEditClick(user)}
-                  >
-                    Edit
-                  </CButton>
-                  <CButton
-                    color="danger"
-                    size="sm"
-                    onClick={() => handleDeleteClick(user.id)}
-                  >
-                    Delete
-                  </CButton>
-                </CTableDataCell>
+<CTableDataCell className="block sm:table-cell"><span>{user.name}</span></CTableDataCell>
+<CTableDataCell className="block sm:table-cell"><span>{user.surName}</span></CTableDataCell>
+<CTableDataCell className="hidden xl:table-cell whitespace-nowrap"><span className='text-ellipsis'>{user.departmentName}</span></CTableDataCell>
+<CTableDataCell className="hidden xl:table-cell whitespace-nowrap">{user.email}</CTableDataCell>
+<CTableDataCell className="hidden xl:table-cell whitespace-nowrap">{user.position}</CTableDataCell>
+<CTableDataCell className="block sm:table-cell whitespace-nowrap">
+  <CButton color="info" size="sm" className="me-2" onClick={() => handleEditClick(user)}>Edit</CButton>
+  <CButton color="danger" size="sm" className="me-2" onClick={() => handleDeleteClick(user.id)}>Delete</CButton>
+  <CButton color="warning" size="sm" onClick={() => handleViewClick(user)}>View</CButton>
+</CTableDataCell>
+
               </CTableRow>
             ))}
           </CTableBody>
@@ -274,6 +269,30 @@ const UserManagement = () => {
             </CButton>
             <CButton color="primary" onClick={handleFormSubmit}>
               Save
+            </CButton>
+          </CModalFooter>
+        </CModal>
+          
+          {/* View User Modal */}
+        <CModal visible={viewModalVisible} onClose={() => setViewModalVisible(false)} backdrop="static" size="lg">
+          <CModalHeader closeButton>
+            <CModalTitle>User Details</CModalTitle>
+          </CModalHeader>
+          <CModalBody>
+            {viewUser && (
+              <div className="p-4">
+                <h5>Name: {viewUser.name}</h5>
+                <h5>Surname: {viewUser.surName}</h5>
+                <h5>Father's Name: {viewUser.fatherName}</h5>
+                <h5>Department: {viewUser.departmentName}</h5>
+                <h5>Email: {viewUser.email}</h5>
+                <h5>Position: {viewUser.position}</h5>
+              </div>
+            )}
+          </CModalBody>
+          <CModalFooter>
+            <CButton color="secondary" onClick={() => setViewModalVisible(false)}>
+              Close
             </CButton>
           </CModalFooter>
         </CModal>
