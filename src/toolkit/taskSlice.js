@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 import { taskApiRequests } from "../services/base"
 
 const initialState = {
-    items: []
+    items: [],
+    taskVisualization: []
 }
 const taskReducer = createSlice({
     name: 'tasks',
@@ -22,6 +23,7 @@ const taskReducer = createSlice({
         },
         removeTask: (state, action) => {
             state.items = state.items.filter((item) => item.id !== action.payload)
+            taskApiRequests.removeTask(action.payload)
         }
     }
 })

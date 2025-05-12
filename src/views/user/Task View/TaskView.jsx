@@ -10,18 +10,21 @@ import {
   CButton,
 } from "@coreui/react";
 import { Eye } from "lucide-react";
-import { departmentApiRequests } from "../../../services/base";
-import { setAllDepartments } from "../../../toolkit/departmentSlice";
+import { taskApiRequests } from "../../../services/base";
 
 const TaskView = () => {
-  const tasks = useSelector((state) => state.tasks.items);
+  const [tasks, setTasks] = useState([])
   const user = useSelector((state) => state.users.user);
   const dispatch = useDispatch();
   const [viewingTask, setViewingTask] = useState(null);
   useEffect(() => {
-    departmentApiRequests.getAllDepartments().then(res => {
-      dispatch(setAllDepartments(res))
-    })
+   taskApiRequests.getTaskByUserId(user._id)
+      .then((response) => {
+        setTasks(response);
+      })
+      .catch((error) => {
+        console.error("Error fetching tasks:", error);
+      });
   }, [dispatch])
 
   const handleStatusChange = (status, task) => {
@@ -59,7 +62,7 @@ const TaskView = () => {
           </tr>
         </thead>
         <tbody>
-          {tasks.filter((task) => task.userId === user.id).map((task) => {
+          {tasks?.map((task) => {
             const deadlinePassed = isDeadlinePassed(task.deadline);
             return (
               <tr key={task.id} className="border-t">
@@ -78,7 +81,7 @@ const TaskView = () => {
                       !deadlinePassed && handleStatusChange(e.target.value, task)
                     }
                     disabled={deadlinePassed}
-                    className={`border rounded-md p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ${deadlinePassed ? "opacity-50 cursor-not-allowed" : ""
+                    className={`border rounded-md p-2 bg-white text-gray-700 focus:outline-none outline-none focus:border-none focus:ring-2 focus:ring-blue-500 ${deadlinePassed ? "opacity-50 cursor-not-allowed" : ""
                       }`}
                   >
                     <option value="Pending">Pending</option>
@@ -87,7 +90,7 @@ const TaskView = () => {
                   </select>
                 </td>
                 <td>
-                  <button className="p-2" onClick={() => setViewingTask(task)}>
+                  <button className="p-2 border-0 outline-0" onClick={() => setViewingTask(task)}>
                     <Eye />
                   </button>
                 </td>

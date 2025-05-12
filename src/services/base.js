@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = 'http://localhost:8000';
+const apiUrl = 'http://localhost:5000/api';
 
 export const userApiRequests = {
     getAllUsers: async function () {
@@ -12,6 +12,15 @@ export const userApiRequests = {
             throw error;
         }
     },
+    getUserById: async function (id) {
+        try {
+            const response = axios.get(`${apiUrl}/users/${id}`)
+            return (await response).data
+        } catch (error) {
+            throw error
+        }
+    }
+    ,
     addNewUser: async function (newUser) {
         try {
             await axios.post(`${apiUrl}/users`, newUser)
@@ -21,7 +30,7 @@ export const userApiRequests = {
     },
     removeUser: async function (id) {
         try {
-            await axios.delete(`${apiUrl}/users/${id}`)
+            await axios.patch(`${apiUrl}/users/${id}`, { isDeleted: true })
         } catch (error) {
             throw error
         }
@@ -44,6 +53,22 @@ export const taskApiRequests = {
             throw error
         }
     },
+    getTaskByUserId: async function (id) {
+        try {
+            const response = axios.get(`${apiUrl}/tasks?userId=${id}`)
+            return (await response).data
+        } catch (error) {
+            throw error
+        }
+    },
+    getTaskByDepartmentId: async function (id) {
+        try {
+            const response = axios.get(`${apiUrl}/tasks?departmentId=${id}`)
+            return (await response).data
+        } catch (error) {
+            throw error
+        }
+    },
     addNewTask: async function (task) {
         try {
             await axios.post(`${apiUrl}/tasks`, task)
@@ -53,7 +78,7 @@ export const taskApiRequests = {
     },
     removeTask: async function (id) {
         try {
-            await axios.delete(`${apiUrl}/tasks/${id}`)
+            await axios.patch(`${apiUrl}/tasks/${id}`, { isDeleted: true })
         } catch (error) {
             throw error
         }
@@ -87,7 +112,7 @@ export const departmentApiRequests = {
     },
     deleteDepartment: async function (depId) {
         try {
-            await axios.delete(`${apiUrl}/departments/${depId}`)
+            await axios.patch(`${apiUrl}/departments/${depId}`, { isDeleted: true })
         } catch (error) {
             throw error
         }

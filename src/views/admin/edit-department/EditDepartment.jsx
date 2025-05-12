@@ -117,8 +117,8 @@ const DepartmentManagement = () => {
   className="whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis px-2 py-1 text-sm sm:text-base"
   onClick={() => setIsAddDepartmentOpen(true)}
 >
-  <span className="hidden xs:inline">Add Department</span>
-  <span className="inline xs:hidden">
+  <span className="inline xs:hidden">Add Department</span>
+  <span className="hidden xs:inline">
     <Plus size={16} />
   </span>
 </CButton>

@@ -3,10 +3,7 @@ import { userApiRequests } from "../services/base"
 
 const initialState = {
     items: [],
-    user: JSON.parse(localStorage.getItem("user")) || {
-        "role": "admin",
-        "id": "emkwjkckfew",
-    },
+    user: JSON.parse(localStorage.getItem("user")) || null
 }
 const userReducer = createSlice({
     name: 'users',
@@ -23,6 +20,9 @@ const userReducer = createSlice({
             state.user = null
             localStorage.removeItem("user")
         },
+        setUser : (state, action) => {
+            state.user = action.payload
+        },
         addNewUser: (state, action) => {
             state.items.push(action.payload);
             userApiRequests.addNewUser(action.payload)
@@ -38,5 +38,5 @@ const userReducer = createSlice({
         }
     }
 })
-export const { setAllUsers, loginUser, logoutUser, addNewUser, removeUser, editUser } = userReducer.actions
+export const { setAllUsers, loginUser, logoutUser, addNewUser, removeUser, editUser,setUser } = userReducer.actions
 export default userReducer.reducer

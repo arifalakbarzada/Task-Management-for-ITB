@@ -2,6 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 import departmentReducer from './toolkit/departmentSlice'
 import userReducer from './toolkit/userSlice'
 import taskReducer from './toolkit/taskSlice';
+import authSlice from './toolkit/authSlice';
 const initialState = {
   sidebarShow: true,
   theme: 'light',
@@ -22,7 +23,8 @@ const store = configureStore({
     app: appSlice.reducer,
     department : departmentReducer,
     users: userReducer,
-    tasks : taskReducer
+    tasks : taskReducer,
+    auth: authSlice
   },
 });
 

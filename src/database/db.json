@@ -9,7 +9,8 @@
       "password": "FAakixdns51541@",
       "email": "johndoe0044@gmail.com",
       "position": "Software Developer",
-      "role": "user"
+      "role": "user",
+      "isDeleted" : false
     },
     {
       "id": "slemlcdfkm",
@@ -20,13 +21,38 @@
       "password": "Wokdklesnkwl209833UEh",
       "position": "HR Meneceri",
       "email": "janesmail52085@gmail.com",
-      "role": "user"
+      "role": "user",
+      "isDeleted" : false
     },
     {
       "id": "esdrftgyhujiuouuytrd",
       "role": "admin",
       "email": "admin@itbtech.com",
       "password": "Admin4546479544fjiuujlhkujjgyfgtd"
+    },
+    {
+      "id": "newuser001",
+      "name": "Alice",
+      "surName": "Brown",
+      "fatherName": "Michael",
+      "departmentName": "Satış Departamenti",
+      "password": "AlicePass123!",
+      "email": "alicebrown@example.com",
+      "position": "Sales Manager",
+      "role": "user",
+      "isDeleted" : false
+    },
+    {
+      "id": "newuser002",
+      "name": "Bob",
+      "surName": "Johnson",
+      "fatherName": "Robert",
+      "departmentName": "Maliyyə Departamenti",
+      "password": "BobPass456!",
+      "email": "bobbybanking@gmail.com",
+      "position": "Financial Analyst",
+      "role": "user",
+      "isDeleted" : false
     }
   ],
   "departments": [
@@ -54,9 +80,11 @@
       "description": "Detaylı task açıklaması buraya gelecek.",
       "owner": "John Doe",
       "status": "In Progress",
-      "deadline": "2025-04-18",
+      "deadline": "2025-05-04",
       "userId": "emkwjkckfew",
-      "creatationDay" : "2023-10-01"
+      "creatationDay": "2023-10-01", 
+      "isDeleted": false
+
     },
     {
       "id": "2",
@@ -66,7 +94,8 @@
       "status": "Completed",
       "deadline": "2024-03-10",
       "userId": "slemlcdfkm",
-      "creatationDay" : "2024-01-02"
+      "creatationDay": "2024-01-02",
+      "isDeleted": false
     },
     {
       "id": "b64c",
@@ -76,7 +105,8 @@
       "deadline": "2025-05-11",
       "status": "Pending",
       "userId": "slemlcdfkm",
-      "creatationDay" : "2024-01-02"
+      "creatationDay": "2024-01-02",
+      "isDeleted": false
     },
     {
       "id": "d3b4",
@@ -85,7 +115,53 @@
       "owner": "John Doe",
       "deadline": "2025-04-16",
       "status": "Pending",
-      "userId": "emkwjkckfew"
+      "userId": "emkwjkckfew",
+      "creatationDay": "2023-10-01",
+      "isDeleted": false
+    },
+    {
+      "id": "task001",
+      "title": "Sales Strategy",
+      "description": "Develop a new sales strategy for Q4.",
+      "owner": "Alice Brown",
+      "status": "In Progress",
+      "deadline": "2024-12-15",
+      "userId": "newuser001",
+      "creatationDay": "2023-10-05",
+      "isDeleted": false
+    },
+    {
+      "id": "task002",
+      "title": "Market Research",
+      "description": "Conduct market research for new product launch.",
+      "owner": "Alice Brown",
+      "status": "Pending",
+      "deadline": "2024-11-20",
+      "userId": "newuser001",
+      "creatationDay": "2023-10-05",
+      "isDeleted": false
+    },
+    {
+      "id": "task003",
+      "title": "Budget Analysis",
+      "description": "Analyze the budget for the upcoming quarter.",
+      "owner": "Bob Johnson",
+      "status": "In Progress",
+      "deadline": "2024-10-30",
+      "userId": "newuser002",
+      "creatationDay": "2023-10-05",
+      "isDeleted": false
+    },
+    {
+      "id": "task004",
+      "title": "Financial Report",
+      "description": "Prepare the financial report for Q3.",
+      "owner": "Bob Johnson",
+      "status": "Pending",
+      "deadline": "2024-11-15",
+      "userId": "newuser002",
+      "creatationDay": "2023-10-05",
+      "isDeleted": false
     }
   ]
 }

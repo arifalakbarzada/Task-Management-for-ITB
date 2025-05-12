@@ -9,12 +9,13 @@ import { useSelector } from 'react-redux'
 
 const AppContent = () => {
   const user = useSelector((state)=>state.users.user)
+  const { accessToken, refreshToken, isAuthenticated } = useSelector(state => state.auth);
   return (
     <CContainer className="px-4" lg>
       <Suspense fallback={<CSpinner color="primary" />}>
         <Routes>
           {
-            user.role === 'admin' ? 
+            user?.role === 'admin' ? 
           routes.map((route, idx) => {
             return (<>
               {route.element && (
@@ -31,7 +32,7 @@ const AppContent = () => {
             )
           })
           : 
-          user.role === 'user' ? userRoutes.map((route, idx) => {
+          user?.role === 'user' ? userRoutes.map((route, idx) => {
             return (
               <>
                {route.element && (
@@ -50,7 +51,7 @@ const AppContent = () => {
            : <Route path='*' element = {< Navigate to = '/login' />}/>
         
           }
-          {user.role === 'admin' ?<Route path="/" element={<Navigate to="/admin/dashboard" replace />} /> : user.role === 'user' ? <Route path='/' element = {<Navigate to={'/view-task'} />} /> : null}
+          {user?.role === 'admin' ?<Route path="/" element={<Navigate to="/admin/dashboard" replace />} /> : user?.role === 'user' ? <Route path='/' element = {<Navigate to={'/view-task'} />} /> : null}
         </Routes>
       </Suspense>
     </CContainer>

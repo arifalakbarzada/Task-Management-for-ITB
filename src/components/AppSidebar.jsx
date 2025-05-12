@@ -11,8 +11,9 @@ import {
 import CIcon from '@coreui/icons-react';
 
 import { AppSidebarNav } from './AppSidebarNav';
-import { logo } from 'src/assets/brand/logo';
-import { sygnet } from 'src/assets/brand/sygnet';
+import img from  './../assets/brand/logo.png' 
+// import { logo } from 'src/assets/brand/logo';
+// import { sygnet } from 'src/assets/brand/sygnet';
 import navigation from '../_nav';
 import { userNav } from '../_nav';
 
@@ -42,8 +43,9 @@ const AppSidebar = () => {
     >
       <CSidebarHeader className="border-bottom d-flex align-items-center">
         <CSidebarBrand to="/">
-          <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />
-          <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
+          {/* <CIcon customClassName="sidebar-brand-full" icon={'./../src/brand/logo.png'} height={32} /> */}
+          <img src={img} alt="hgbwjed" />
+          {/* <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} /> */}
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
@@ -52,7 +54,7 @@ const AppSidebar = () => {
         />
       </CSidebarHeader>
 
-      <AppSidebarNav items={user.role === 'admin' ? navigation : user.role === 'user' ? userNav : []} />
+      <AppSidebarNav items={user?.role === 'admin' ? navigation : user?.role === 'user' ? userNav : []} />
 
       <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarToggler onClick={toggleUnfoldable} />
