@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json' assert { type: 'json' };
+import swaggerDocument from './swagger.json'
 import userRoutes from "./routes/users.js";
 import departmentRoutes from "./routes/departments.js";
 import taskRoutes from "./routes/tasks.js";
