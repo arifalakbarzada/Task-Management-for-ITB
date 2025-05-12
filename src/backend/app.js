@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocument from './swagger.json'
+// import swaggerDocument from './swagger.json'
 import userRoutes from "./routes/users.js";
 import departmentRoutes from "./routes/departments.js";
 import taskRoutes from "./routes/tasks.js";
@@ -44,7 +44,7 @@ app.use('/api',  authRoutes)
 app.use("/api/users", userRoutes);
 app.use("/api/departments",  departmentRoutes);
 app.use("/api/tasks", taskRoutes);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 console.log('Swagger UI: http://localhost:5000/api-docs');
 
 app.listen(5000, () => {
