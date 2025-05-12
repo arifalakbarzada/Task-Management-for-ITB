@@ -25,7 +25,7 @@ const App = () => {
   const user = useSelector((state) => state.users.user)
   useEffect(() => {
     dispatch(setUser(JSON.parse(localStorage.getItem('user'))))
-    if (user.role === 'admin') {
+    if (user?.role === 'admin') {
       departmentApiRequests.getAllDepartments().then(res => {
         dispatch(setAllDepartments(res))
       })
