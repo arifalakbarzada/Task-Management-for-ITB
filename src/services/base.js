@@ -1,6 +1,6 @@
 import axios from "axios";
-const BACK_END_URL = import.meta.env.BACK_END_URL;
-const apiUrl = `${BACK_END_URL}/api`;
+const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const apiUrl = `${VITE_BACKEND_URL}/api`;
 
 export const userApiRequests = {
     getAllUsers: async function () {
