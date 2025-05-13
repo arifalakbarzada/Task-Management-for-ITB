@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = 'http://localhost:5000/api';
+const apiUrl = `${process.env.BACK_END_URL}/api`;
 
 export const userApiRequests = {
     getAllUsers: async function () {
