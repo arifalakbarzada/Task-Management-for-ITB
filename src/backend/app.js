@@ -28,11 +28,11 @@ startServer();
 const app = express();
 app.use(cors({
   credentials: true,
-  origin: "http://localhost:5173",
+  origin: "https://task-management-for-itb.vercel.app/",
 
 }));
 app.get('/cors', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.setHeader('Access-Control-Allow-Origin', 'https://task-management-for-itb.vercel.app/');
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
