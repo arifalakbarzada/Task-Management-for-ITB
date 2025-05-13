@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { loginSuccess } from './authSlice';
 import { loginUser } from './userSlice';
-
+const apiUrl = import.meta.env.BACK_END_URL
 export const login = (userData) => async (dispatch) => {
   try {
-    const response = await axios.post(`${import.meta.env.BACK_END_URL}/api/login`, {
+    const response = await axios.post(`${apiUrl}/api/login`, {
       email: userData.email,
       password: userData.password,
     }, {
