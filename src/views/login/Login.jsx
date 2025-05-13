@@ -30,7 +30,7 @@ const Login = () => {
         // Login işlemi için API çağrısı yapılıyor
         dispatch(login(userData));
         // Kullanıcı bilgilerini Redux store'a kaydet
-        axios.post("http://localhost:5000/api/login", userData,).then((res)=>{
+        axios.post(`${process.env.BACK_END_URL}/api/login`, userData,).then((res)=>{
             if (res.data.msg === "Login successful") {
                 dispatch(loginUser(res.data.user))
                 navigate("/")

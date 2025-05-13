@@ -4,7 +4,7 @@ import { loginUser } from './userSlice';
 
 export const login = (userData) => async (dispatch) => {
   try {
-    const response = await axios.post('http://localhost:5000/api/login', {
+    const response = await axios.post(`${process.env.BACK_END_URL}/api/login`, {
       email: userData.email,
       password: userData.password,
     }, {
