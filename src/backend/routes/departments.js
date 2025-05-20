@@ -3,14 +3,11 @@ import { getDepartments, createDepartment, updateDepartment } from "../controlle
 
 const router = express.Router();
 
-// Tüm departmanları getir
 router.get("/", getDepartments);
 
-// Yeni bir departman oluştur
 router.post("/", createDepartment);
 
-// Departmanları güncelle
-router.patch("/:id", updateDepartment);
+router.patch("/:_id", updateDepartment);
 
 
 export default router;

@@ -16,11 +16,11 @@ const departmentReducer = createSlice({
             departmentApiRequests.addNewDepartment(action.payload)
         },
         deleteDepartment: (state, action) => {
-            state.items = state.items.filter((item) => item.id !== action.payload)
+            state.items = state.items.filter((item) => item._id !== action.payload)
             departmentApiRequests.deleteDepartment(action.payload)
         },
         changeDepartment: (state, action) => {
-            const index = state.items.findIndex((item) => item.id === action.payload.id)
+            const index = state.items.findIndex((item) => item._id === action.payload._id)
             state.items[index] = action.payload
             departmentApiRequests.editDepartment(action.payload.id, action.payload)
         }

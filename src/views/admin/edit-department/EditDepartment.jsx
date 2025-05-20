@@ -48,13 +48,10 @@ const DepartmentManagement = () => {
       return;
     }
     else {
-      const newId = departments.length > 0
-        ? Math.max(...departments.map(d => d.id)) + 1
-        : 1;
 
       const newDept = {
-        id: newId.toString(),
         name: newDepartment.trim(),
+        isDeleted: false
       };
 
       dispatch(addNewDepartment(newDept));
@@ -101,7 +98,7 @@ const DepartmentManagement = () => {
       return;
     }
     else {
-      dispatch(changeDepartment({ id: selectedDepartment.id, name: departmentNewName }))
+      dispatch(changeDepartment({ id: selectedDepartment._id, name: departmentNewName }))
       toast.success('Department name has changed successfully')
       setIsEditOpen(false)
     }
@@ -134,7 +131,7 @@ const DepartmentManagement = () => {
             </CTableHead>
             <CTableBody>
               {departments.map(department => (
-                <CTableRow key={department.id}>
+                <CTableRow key={department._id}>
                   <CTableDataCell className="whitespace-nowrap max-w-[100px] overflow-hidden text-ellipsis">
                     <span className="">{department.name}</span>
                   </CTableDataCell>
@@ -153,7 +150,7 @@ const DepartmentManagement = () => {
                       <CButton
                         color="danger"
                         variant="outline"
-                        onClick={() => handleDeleteDepartment(department.id)}
+                        onClick={() => handleDeleteDepartment(department._id)}
                       >
                         <Trash size={16} />
                       </CButton>

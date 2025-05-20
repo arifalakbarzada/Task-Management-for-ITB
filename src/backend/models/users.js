@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   email: String,
   position: String,
   role: String,
-  isDeleted: Boolean
+  isDeleted: Boolean,
+  departmentId: String
 });
 const User = mongoose.model("User", userSchema);
 export default User;

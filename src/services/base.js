@@ -73,9 +73,9 @@ export const taskApiRequests = {
         }
     }
     ,
-    getTaskByDepartmentId: async function (id) {
+    getTaskByDepartmentId: async function (id,userId,status) {
         try {
-            const response = axios.get(`${apiUrl}/tasks?departmentId=${id}`)
+            const response = axios.get(`${apiUrl}/tasks?departmentId=${id}&owner=${userId}&status=${status}`)
             return (await response).data
         } catch (error) {
             throw error

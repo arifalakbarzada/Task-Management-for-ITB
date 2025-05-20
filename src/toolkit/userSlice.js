@@ -35,10 +35,9 @@ const userReducer = createSlice({
         },
         logoutUser: (state) => {
             state.user = null
-            localStorage.removeItem("user")
-            localStorage.removeItem("accessToken")
-            localStorage.removeItem("refreshToken")
             userApiRequests.logoutUser()
+            localStorage.removeItem("refreshToken")
+            localStorage.removeItem("accessToken")
         },
         setUser : (state, action) => {
             state.user = action.payload
@@ -48,13 +47,13 @@ const userReducer = createSlice({
             userApiRequests.addNewUser(action.payload)
         },
         removeUser: (state, action) => {
-            state.items = state.items.filter((item) => item.id !== action.payload)
+            state.items = state.items.filter((item) => item._id !== action.payload)
             userApiRequests.removeUser(action.payload)
         },
         editUser: (state, action) => {
-            const index = state.items.findIndex((item) => item.id === action.payload.id)
+            const index = state.items.findIndex((item) => item._id === action.payload._id)
             state.items[index] = action.payload
-            userApiRequests.editUser(action.payload.id, action.payload)
+            userApiRequests.editUser(action.payload._id, action.payload)
         }
     }
 })

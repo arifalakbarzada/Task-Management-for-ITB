@@ -5,7 +5,6 @@ const blacklistedTokenSchema = new mongoose.Schema({
   expiresAt: { type: Date, required: true },
 });
 
-// Otomatik olarak süre dolunca silinsin (TTL index)
 blacklistedTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 const BlacklistedToken = mongoose.model('BlacklistedToken', blacklistedTokenSchema) || mongoose.models.BlacklistedToken;
 export default BlacklistedToken;

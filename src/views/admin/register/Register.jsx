@@ -8,7 +8,6 @@ import { setAllDepartments } from '../../../toolkit/departmentSlice';
 
 const Register = () => {
   const departments = useSelector((state) => state.department.items)
-  const users = useSelector((state) => state.users.items)
   const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     name: '',
@@ -19,21 +18,19 @@ const Register = () => {
     departmentName: '',
     position: '',
     role: 'user',
-    isDeleted: false
+    isDeleted: false,
+    departmentId: ''
   });
   useEffect(() => {
     departmentApiRequests.getAllDepartments().then(res => {
       dispatch(setAllDepartments(res))
     })
   }, [])
-  
+
   const handleDepartmentChange = (e) => {
     const selectedDepartment = e.target.value;
-    setFormData(prev => ({
-      ...prev,
-      departmentName: selectedDepartment,
-      position: ''
-    }));
+    const selectedDepartmentObj = departments.find(dept => dept.name === selectedDepartment);
+    setFormData({ ...formData, departmentName: selectedDepartment, departmentId: selectedDepartmentObj ? selectedDepartmentObj._id : '' });
   };
 
   const handleInputChange = (e) => {
@@ -43,23 +40,24 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-      console.log('Form submitted:', formData);
 
-      toast.success('Qeydiyyat uğurla başa çatdı!')
-      setFormData({
-        name: '',
-        surName: '',
-        fatherName: '',
-        email: '',
-        password: '',
-        departmentName: '',
-        position: '',
-        role: 'user',
-        isDeleted: false
-      });
-      dispatch(addNewUser(formData))
+    console.log('Form submitted:', formData);
 
+    toast.success('Qeydiyyat uğurla başa çatdı!')
+
+    dispatch(addNewUser({...formData, departmentId: formData.departmentId}))
+    setFormData({
+      name: '',
+      surName: '',
+      fatherName: '',
+      email: '',
+      password: '',
+      departmentName: '',
+      position: '',
+      role: 'user',
+      isDeleted: false,
+      departmentId: ''
+    });
   };
 
   return (
@@ -70,7 +68,6 @@ const Register = () => {
         </div>
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* First Name */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FaUser className="text-indigo-500" />
@@ -85,7 +82,6 @@ const Register = () => {
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300 bg-white"
               />
             </div>
-            {/* Last Name */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FaUser className="text-indigo-500" />
@@ -103,7 +99,6 @@ const Register = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Father Name */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FaUser className="text-indigo-500" />
@@ -118,7 +113,6 @@ const Register = () => {
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300 bg-white"
               />
             </div>
-            {/* Email */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FaEnvelope className="text-indigo-500" />
@@ -136,7 +130,6 @@ const Register = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Password */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FaLock className="text-indigo-500" />
@@ -151,7 +144,6 @@ const Register = () => {
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-300 bg-white"
               />
             </div>
-            {/* Department */}
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <FaBuilding className="text-indigo-500" />

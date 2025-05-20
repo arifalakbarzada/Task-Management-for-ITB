@@ -137,9 +137,7 @@ const UserManagement = () => {
                     className="text-xs me-1 px-2 py-1"
                     onClick={() => handleEditClick(user)}
                   >
-                    {/* Icon for small screens */}
                     <FaEdit className="text-white max-[397px]:inline max-[397px]:me-0 hidden" />
-                    {/* Text for larger screens */}
                     <span className="max-[397px]:hidden">Edit</span>
                   </CButton>
 
@@ -170,7 +168,6 @@ const UserManagement = () => {
           </CTableBody>
         </CTable>
 
-        {/* Edit User Modal */}
         <CModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}
@@ -321,7 +318,6 @@ const UserManagement = () => {
           </CModalFooter>
         </CModal>
 
-        {/* View User Modal */}
         <CModal visible={viewModalVisible} onClose={() => setViewModalVisible(false)} backdrop="static" size="lg">
           <CModalHeader closeButton>
             <CModalTitle>User Details</CModalTitle>

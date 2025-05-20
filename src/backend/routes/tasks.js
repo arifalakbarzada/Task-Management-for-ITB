@@ -6,13 +6,19 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const { userId, departmentId } = req.query;
+    const { departmentId, owner, status } = req.query;
+
     const filter = {
       isDeleted: false,
     };
 
-    if (userId && mongoose.Types.ObjectId.isValid(userId)) {
-      filter.userId = new mongoose.Types.ObjectId(userId);
+    // Only add valid filters
+    if (status) {
+      filter.status = status;
+    }
+
+    if (owner) {
+      filter.owner = owner
     }
 
     if (departmentId && mongoose.Types.ObjectId.isValid(departmentId)) {
@@ -22,28 +28,29 @@ router.get('/', async (req, res) => {
     const tasks = await Task.find(filter);
 
     if (tasks.length === 0) {
+      console.log('Filtre:', filter);
       return res.status(404).json({ message: 'Görev bulunamadı' });
     }
 
     res.status(200).json(tasks);
   } catch (error) {
     console.error('Hata:', error);
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: 'Sunucu hatası' });
   }
 });
 
 
-// POST: Yeni görev ekle
-router.post('/', async (req, res) => {
-  const { title, description, owner, deadline, status } = req.body;
 
-  // Verilerin doğruluğunu kontrol et
-  if (!title || !description || !owner || !deadline) {
+router.post('/', async (req, res) => {
+
+  if (req.body.title === undefined || req.body.description === undefined || req.body.owner === undefined || req.body.deadline === undefined) {
     return res.status(400).json({ message: 'Başlık, açıklama, sahibi ve tarih gereklidir' });
   }
 
   try {
-    const newTask = new Task({ title, description, owner, deadline, status });
+    const task = req.body;
+    console.log(task)
+    const newTask = new Task(task);
     const savedTask = await newTask.save();
     res.status(201).json(savedTask);
   } catch (error) {
@@ -51,9 +58,9 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PATCH: Görev güncelle (örneğin sadece "completed" alanı)
 router.patch('/:id', async (req, res) => {
-  const { title, description, owner, deadline, status, isDeleted } = req.body;
+  const { id } = req.params;
+  const currentTask = await Task.findById(id);
 
   if (Object.keys(req.body).length === 0) {
     return res.status(400).json({ message: 'Güncelleme için en az bir alan gereklidir' });

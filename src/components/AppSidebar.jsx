@@ -12,8 +12,6 @@ import CIcon from '@coreui/icons-react';
 
 import { AppSidebarNav } from './AppSidebarNav';
 import img from  './../assets/brand/logo.png' 
-// import { logo } from 'src/assets/brand/logo';
-// import { sygnet } from 'src/assets/brand/sygnet';
 import navigation from '../_nav';
 import { userNav } from '../_nav';
 

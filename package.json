@@ -10,8 +10,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node src/backend/app.js",
-    "start:dev": "nodemon src/backend/app.js",
-    "json-server": "json-server --watch src/database/db.json --port 3001"
+    "start:dev": "nodemon src/backend/app.js"
   },
   "dependencies": {
     "@coreui/chartjs": "^4.0.0",
@@ -35,11 +34,11 @@
     "express": "^5.1.0",
     "framer-motion": "^12.4.2",
     "http-proxy-middleware": "^3.0.5",
-    "json-server": "^1.0.0-beta.3",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",
     "mongoose": "^8.14.1",
+    "nodemailer": "^7.0.3",
     "nodemon": "^3.1.10",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",

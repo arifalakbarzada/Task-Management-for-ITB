@@ -72,7 +72,7 @@ const TaskTable = () => {
     taskApiRequests.getAllTasks().then((res) => {
       dispatch(setAllTasks(res));
     });
-  }, [dispatch]);
+  }, []);
 
   const [selectedUser, setSelectedUser] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
@@ -82,17 +82,34 @@ const TaskTable = () => {
 
   useEffect(() => {
     if (selectedDepartment) {
-      taskApiRequests.getTaskByDepartmentId(selectedDepartment).then((res) => {
+      taskApiRequests.getTaskByDepartmentId(selectedDepartment , selectedUser , selectedStatus).then((res) => {
         setFilteredTasks(res.length === 0 ? [] : res);
+      }).catch((err) => {
+        console.error("Error fetching tasks by department:", err);
+        setFilteredTasks([]);
       });
     }
-  }, [dispatch, selectedDepartment]);
+    else if (selectedDepartment === '' && selectedUser === '' && selectedStatus === '') {
+      taskApiRequests.getAllTasks().then((res) => {
+        setFilteredTasks(res);
+      });
+    }
+    else if (!selectedDepartment && !selectedUser && selectedStatus) {
+      taskApiRequests.getTaskByDepartmentId(selectedDepartment, selectedUser , selectedStatus).then((res) => {
+        setFilteredTasks(res.length === 0 ? [] : res);
+      }).catch((err) => {
+        console.error("Error fetching tasks by department:", err);
+        setFilteredTasks([]);
+      }
+      );
+    }
+  }, [dispatch, selectedDepartment , selectedUser, selectedStatus]);
 
   const availableUsers = useMemo(() => {
     return users.filter(
       (user) =>
         user.role === "user" &&
-        ( user.departmentName === selectedDepartment)
+        ( user.departmentId === selectedDepartment)
     );
   }, [users, selectedDepartment]);
 
@@ -127,7 +144,17 @@ const TaskTable = () => {
     if (modalType === "edit") {
       dispatch(editTask(currentTask));
     } else {
-      dispatch(addNewTask(currentTask));
+      const newTask =    {
+        ...currentTask,
+        creationDay : new Date().toISOString(),
+        userId: currentTask.userId,
+        departmentId: currentTask.departmentId,
+        isDeleted: false,
+        status: "Pending",
+      }
+      console.log(newTask)
+      dispatch(addNewTask(newTask));
+
     }
     setShowModal(false);
     Swal.fire({
@@ -198,7 +225,7 @@ const TaskTable = () => {
             >
               <option value="">All Departments</option>
               {departments.map((d) => (
-                <option key={d.id} value={d.id}>{d.name}</option>
+                <option key={d._id} value={d._id}>{d.name}</option>
               ))}
             </CFormSelect>
           </div>
@@ -247,22 +274,22 @@ const TaskTable = () => {
           <CTable hover responsive className="align-middle">
             <CTableHead className="bg-light">
               <CTableRow>
-                <CTableHeaderCell>Title</CTableHeaderCell>
+                <CTableHeaderCell className="max-w-[80px] whitespace-nowrap text-ellipsis">Title</CTableHeaderCell>
                 <CTableHeaderCell className="hidden md:table-cell">Assigned To</CTableHeaderCell>
                 <CTableHeaderCell className="hidden md:table-cell">Deadline</CTableHeaderCell>
-                <CTableHeaderCell className="hidden xs:table-cell">Status</CTableHeaderCell>
+                <CTableHeaderCell className="hidden sm:table-cell">Status</CTableHeaderCell>
                 <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               {filteredTasks.map((task) => (
                 <CTableRow key={task.id}>
-                  <CTableDataCell className="sm:max-w-[80px] whitespace-nowrap ">{task.title}</CTableDataCell>
-                  <CTableDataCell className="hidden md:table-cell">{task.owner}</CTableDataCell>
+                  <CTableDataCell className="max-w-[80px] whitespace-nowrap overflow-hidden text-ellipsis "><span className="w-full">{task.title}</span></CTableDataCell>
+                  <CTableDataCell className="hidden md:table-cell"><span className="w-full">{task.owner}</span></CTableDataCell>
                   <CTableDataCell className="hidden md:table-cell">
-                    {new Date(task.deadline).toLocaleDateString()}
+                    <span className="w-full">{new Date(task.deadline).toLocaleDateString()}</span>
                   </CTableDataCell>
-                  <CTableDataCell className="hidden xs:table-cell">
+                  <CTableDataCell className="hidden sm:table-cell">
                     <CBadge  color={statusColors[task.status] || "secondary"}>
                       {task.status}
                     </CBadge>
@@ -279,8 +306,6 @@ const TaskTable = () => {
         )}
       </CCard>
 
-      {/* Modal burada aynı kalabilir veya istersek modal içeriğine de responsive Tailwind sınıfları eklenebilir */}
-         {/* Modal for Add/Edit/View */}
        <CModal 
          visible={showModal} 
          onClose={() => setShowModal(false)}
@@ -359,8 +384,8 @@ const TaskTable = () => {
                        setCurrentTask({
                          ...currentTask, 
                          owner: e.target.value,
-                         userId: selectedUser?._id || "",
-                         departmentId: selectedUser?.departmentId || ""
+                         userId: selectedUser._id || "",
+                         departmentId: selectedUser.departmentId || ""
                        });
                      }}
                      required

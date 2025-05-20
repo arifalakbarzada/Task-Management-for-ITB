@@ -7,8 +7,8 @@ const taskSchema = new mongoose.Schema({
   status: String,
   deadline: String,
   userId: String,
-  departMentId: String,
-  creatationDay: String,
+  departmentId: String,
+  creationDay: String,
   isDeleted: Boolean
 });
 

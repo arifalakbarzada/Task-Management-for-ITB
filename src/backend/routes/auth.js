@@ -1,4 +1,3 @@
-// routes/auth.js
 import express from 'express';
 import User from '../models/users.js';
 import jwt from 'jsonwebtoken';
@@ -6,6 +5,8 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { verifyToken } from '../middlewares/auth.js';
 import BlacklistedToken from '../models/blackList.js'
+import sendEmail from '../../services/email.js';
+import { htmlTemplate } from '../schemas/register.js';
 dotenv.config();
 
 const router = express.Router();
@@ -52,6 +53,7 @@ router.post('/register', async (req, res) => {
 
 
     res.status(201).json({ msg: 'User created' });
+    sendEmail(email, "Hesap Oluşturuldu",htmlTemplate(user.name, password))
   } catch (err) {
     res.status(500).json({ msg: 'Server error 500' });
   }
@@ -63,13 +65,11 @@ router.post("/refresh-token", (req, res) => {
     return res.status(401).json({ error: "Refresh token gerekli." });
   }
 
-  // Doğrulama
   jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, user) => {
     if (err) {
       return res.status(403).json({ error: "Geçersiz refresh token." });
     }
 
-    // Yeni access token üret
     const newAccessToken = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
@@ -87,7 +87,6 @@ router.post("/logout", async (req, res) => {
   if (!refreshToken) return res.sendStatus(400);
 
   try {
-    // refreshToken'ın süresini öğren (JWT decode)
     const decoded = jwt.decode(refreshToken);
     const expiresAt = new Date(decoded.exp * 1000);
 

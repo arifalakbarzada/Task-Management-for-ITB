@@ -12,7 +12,7 @@ import { cilMenu } from '@coreui/icons';
 import { AppBreadcrumb } from './index';
 import { AppHeaderDropdown } from './header/index';
 
-import { setState } from '../store'; // Redux Toolkit action'ı içe aktar
+import { setState } from '../store';
 
 const AppHeader = () => {
   const headerRef = useRef();
