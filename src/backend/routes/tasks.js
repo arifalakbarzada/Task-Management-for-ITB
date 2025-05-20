@@ -7,7 +7,9 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const { userId, departmentId } = req.query;
-    const filter = {};
+    const filter = {
+      isDeleted: false,
+    };
 
     if (userId && mongoose.Types.ObjectId.isValid(userId)) {
       filter.userId = new mongoose.Types.ObjectId(userId);
@@ -53,8 +55,7 @@ router.post('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   const { title, description, owner, deadline, status, isDeleted } = req.body;
 
-  // Görev güncelleme için verileri doğrula
-  if (!title && !description && !owner && !deadline && !status) {
+  if (Object.keys(req.body).length === 0) {
     return res.status(400).json({ message: 'Güncelleme için en az bir alan gereklidir' });
   }
 

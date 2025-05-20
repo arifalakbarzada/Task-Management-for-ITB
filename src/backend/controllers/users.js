@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import User from "../models/users.js";
 
 export const getUsers = async (req, res) => {
@@ -11,7 +12,7 @@ export const getUsers = async (req, res) => {
 };
 
 export const getUserById = async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params);
   user ? res.json(user) : res.status(404).json({ message: "User not found" });
 };
 

@@ -113,29 +113,29 @@ const DepartmentManagement = () => {
         <CCardHeader className="d-flex justify-content-between align-items-center">
           <h5 className="mb-0 whitespace-nowrap">Departments</h5>
           <CButton
-  color="primary"
-  className="whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis px-2 py-1 text-sm sm:text-base"
-  onClick={() => setIsAddDepartmentOpen(true)}
->
-  <span className="inline xs:hidden">Add Department</span>
-  <span className="hidden xs:inline">
-    <Plus size={16} />
-  </span>
-</CButton>
+            color="primary"
+            className="whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis px-2 py-1 text-sm sm:text-base"
+            onClick={() => setIsAddDepartmentOpen(true)}
+          >
+            <span className=" hidden xs:inline">Add Department</span>
+            <span className="inline xs:hidden">
+              <Plus size={16} />
+            </span>
+          </CButton>
 
         </CCardHeader>
         <CCardBody className='py-0 px-1'>
           <CTable hover responsive>
             <CTableHead>
               <CTableRow>
-                <CTableHeaderCell className='whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis'>Department Name</CTableHeaderCell>
+                <CTableHeaderCell className='whitespace-nowrap max-w-[150px]  overflow-hidden text-ellipsis'>Name</CTableHeaderCell>
                 <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               {departments.map(department => (
                 <CTableRow key={department.id}>
-                  <CTableDataCell className="whitespace-nowrap max-w-[150px] overflow-hidden text-ellipsis">
+                  <CTableDataCell className="whitespace-nowrap max-w-[100px] overflow-hidden text-ellipsis">
                     <span className="">{department.name}</span>
                   </CTableDataCell>
                   <CTableDataCell>

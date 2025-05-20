@@ -21,8 +21,10 @@ import {
 import { FaEdit, FaTrash, FaEye } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import { useDispatch, useSelector } from 'react-redux';
-import { editUser, removeUser } from '../../../toolkit/userSlice';
+import { editUser, removeUser, setAllUsers } from '../../../toolkit/userSlice';
 import { removeTask } from '../../../toolkit/taskSlice';
+import { departmentApiRequests, userApiRequests } from '../../../services/base';
+import { setAllDepartments } from '../../../toolkit/departmentSlice';
 
 const UserManagement = () => {
   const [viewModalVisible, setViewModalVisible] = useState(false);
@@ -38,6 +40,15 @@ const UserManagement = () => {
   const dispatch = useDispatch()
   const [modalVisible, setModalVisible] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+  useEffect(() => {
+    userApiRequests.getAllUsers().then(res => {
+      dispatch(setAllUsers(res))
+    })
+    departmentApiRequests.getAllDepartments().then(res => {
+      dispatch(setAllDepartments(res))
+    })
+  }, [])
+  
 
   const handleEditClick = (user) => {
     setCurrentUser({ ...user });
@@ -102,11 +113,11 @@ const UserManagement = () => {
           <CTableHead color="light">
             <CTableRow>
               <CTableHeaderCell className="table-cell overflow-x-auto">Name</CTableHeaderCell>
-              <CTableHeaderCell className="table-cell overflow-x-auto">Surname</CTableHeaderCell>
+              <CTableHeaderCell className="hidden xs1:table-cell overflow-x-auto">Surname</CTableHeaderCell>
               <CTableHeaderCell className="hidden xl:table-cell">Department</CTableHeaderCell>
               <CTableHeaderCell className="hidden md:table-cell">Email</CTableHeaderCell>
               <CTableHeaderCell className="hidden xl:table-cell">Position</CTableHeaderCell>
-              <CTableHeaderCell className=" table-cell">Actions</CTableHeaderCell>
+              <CTableHeaderCell className="table-cell">Actions</CTableHeaderCell>
 
             </CTableRow>
           </CTableHead>
@@ -114,7 +125,7 @@ const UserManagement = () => {
             {users.map((user) => user.role === 'user' && (
               <CTableRow key={user.id}>
                 <CTableDataCell className="table-cell"><span>{user.name}</span></CTableDataCell>
-                <CTableDataCell className="table-cell"><span>{user.surName}</span></CTableDataCell>
+                <CTableDataCell className="hidden xs1:table-cell"><span>{user.surName}</span></CTableDataCell>
                 <CTableDataCell className="hidden xl:table-cell whitespace-nowrap"><span className='text-ellipsis'>{user.departmentName}</span></CTableDataCell>
                 <CTableDataCell className="hidden md:table-cell whitespace-nowrap">{user.email}</CTableDataCell>
                 <CTableDataCell className="hidden xl:table-cell whitespace-nowrap">{user.position}</CTableDataCell>

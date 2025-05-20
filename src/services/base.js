@@ -1,6 +1,7 @@
 import axios from "axios";
-const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-const apiUrl = `${VITE_BACKEND_URL}/api`;
+import { logoutUser } from "../toolkit/userSlice";
+const url = import.meta.env.VITE_BACKEND_URL;
+const apiUrl = `${url}/api`;
 
 export const userApiRequests = {
     getAllUsers: async function () {
@@ -23,7 +24,7 @@ export const userApiRequests = {
     ,
     addNewUser: async function (newUser) {
         try {
-            await axios.post(`${apiUrl}/users`, newUser)
+            await axios.post(`${apiUrl}/register`, {email: newUser.email, password: newUser.password, user: newUser})
         } catch (error) {
             throw error
         }
@@ -41,7 +42,16 @@ export const userApiRequests = {
         } catch (error) {
             throw error
         }
-    }
+    },
+    logoutUser: async function () {
+        try {
+            const refreshToken = localStorage.getItem("refreshToken")
+            await axios.post(`${apiUrl}/logout`, { refreshToken })
+        } catch (error) {
+            throw error
+        }
+    },
+    
 }
 export const taskApiRequests = {
     getAllTasks: async function () {
@@ -54,13 +64,15 @@ export const taskApiRequests = {
         }
     },
     getTaskByUserId: async function (id) {
+        if (!id) throw new Error("userId gerekli");
         try {
-            const response = axios.get(`${apiUrl}/tasks?userId=${id}`)
-            return (await response).data
+            const response = await axios.get(`${apiUrl}/tasks?userId=${id}`);
+            return response.data;
         } catch (error) {
-            throw error
+            throw error;
         }
-    },
+    }
+    ,
     getTaskByDepartmentId: async function (id) {
         try {
             const response = axios.get(`${apiUrl}/tasks?departmentId=${id}`)

@@ -1,10 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { userApiRequests } from "../services/base"
+import {jwtDecode} from 'jwt-decode';
+
+
 
 const initialState = {
     items: [],
     user: JSON.parse(localStorage.getItem("user")) || null
 }
+export const refreshUser = createAsyncThunk(
+  'user/refreshUser',
+  async (_, thunkAPI) => {
+    try {
+      const refreshToken = localStorage.getItem('refreshToken');
+      const decoded = jwtDecode(refreshToken);
+      const userId = decoded.userId;
+      console.log(decoded)
+      const response = await userApiRequests.getUserById(userId);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue("Refresh failed");
+    }
+  }
+);
 const userReducer = createSlice({
     name: 'users',
     initialState,
@@ -14,11 +32,13 @@ const userReducer = createSlice({
         },
         loginUser: (state, action) => {
             state.user = action.payload
-            localStorage.setItem("user", JSON.stringify(action.payload))
         },
         logoutUser: (state) => {
             state.user = null
             localStorage.removeItem("user")
+            localStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
+            userApiRequests.logoutUser()
         },
         setUser : (state, action) => {
             state.user = action.payload
@@ -38,5 +58,5 @@ const userReducer = createSlice({
         }
     }
 })
-export const { setAllUsers, loginUser, logoutUser, addNewUser, removeUser, editUser,setUser } = userReducer.actions
+export const { setAllUsers, loginUser, logoutUser, addNewUser, removeUser, editUser,setUser} = userReducer.actions
 export default userReducer.reducer

@@ -5,9 +5,12 @@ import 'core-js'
 import './main.css'
 import App from './App'
 import store from './store'
+import { BrowserRouter } from 'react-router-dom'
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
 )

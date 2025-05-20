@@ -5,6 +5,8 @@ import { loginUser } from "../../toolkit/userSlice";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../toolkit/authAction";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { userApiRequests } from "../../services/base";
 
 const Login = () => {
     const [loginData, setLoginData] = useState({
@@ -16,26 +18,38 @@ const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
+    const accessToken = localStorage.getItem("accessToken")
+    const refreshToken = localStorage.getItem("refreshToken")
+    useEffect(() => {
+        if (accessToken) {
+            const decoded = jwtDecode(accessToken);
+            const userId = decoded.userId;
+            userApiRequests.getUserById(userId).then(res => {
+                dispatch(loginUser(res))
+                navigate("/")
+            })
+        }
+    }, [])
+    
     useEffect(() => {
         user?.role === "admin" && navigate("/admin/dashboard")
         user?.role === "user" && navigate("/user/dashboard")
     }, [dispatch])
-    const handleLogin = (e) => {
+    const handleLogin = async (e) =>  {
         e.preventDefault();
         const userData = {
             email: loginData.email,
             password: loginData.password,
         };
 
-        // Login işlemi için API çağrısı yapılıyor
-        dispatch(login(userData));
-        // Kullanıcı bilgilerini Redux store'a kaydet
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, userData,).then((res)=>{
-            if (res.data.msg === "Login successful") {
-                dispatch(loginUser(res.data.user))
-                navigate("/")
-            }
-        })
+        login(userData)
+        const url = import.meta.env.VITE_BACKEND_URL
+        const response = await axios.post(`${url}/api/login`, userData)
+        const { user, msg, accessToken, refreshToken } = response.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+        accessToken && dispatch(loginUser(user))
+        navigate("/");
     };
 
     return (

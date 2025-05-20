@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addNewTask, editTask, removeTask } from "../../../toolkit/taskSlice";
+import { addNewTask, editTask, removeTask, setAllTasks } from "../../../toolkit/taskSlice";
 import {
   CButton,
   CCard,
@@ -33,6 +33,8 @@ import {
   taskApiRequests,
   userApiRequests,
 } from "../../../services/base";
+import { setAllDepartments } from "../../../toolkit/departmentSlice";
+import { setAllUsers } from "../../../toolkit/userSlice";
 
 const statusColors = {
   Pending: "warning",
@@ -57,6 +59,7 @@ const TaskTable = () => {
     status: "Pending",
     userId: "",
     departmentId: "",
+    isDeleted: false,
   });
 
   useEffect(() => {
@@ -89,7 +92,7 @@ const TaskTable = () => {
     return users.filter(
       (user) =>
         user.role === "user" &&
-        (!selectedDepartment || user.departmentName === selectedDepartment)
+        ( user.departmentName === selectedDepartment)
     );
   }, [users, selectedDepartment]);
 
@@ -106,6 +109,7 @@ const TaskTable = () => {
             status: "Pending",
             userId: "",
             departmentId: "",
+            isDeleted: false,
           }
     );
     setShowModal(true);
@@ -166,7 +170,7 @@ const TaskTable = () => {
 
   return (
     <div className="p-4 space-y-6">
-      <div className="flex  sm:flex-row justify-between gap-4 items-center">
+      <div className="flex flex-col  xs:flex-row justify-between gap-4 items-center">
         <h2 className="text-xl font-semibold whitespace-nowrap">Task Management</h2>
         <CButton color="primary" onClick={() => openModal("add")}> <span className="whitespace-nowrap"><BsPlus className="inline" /> Add Task</span></CButton>
       </div>
@@ -246,27 +250,27 @@ const TaskTable = () => {
                 <CTableHeaderCell>Title</CTableHeaderCell>
                 <CTableHeaderCell className="hidden md:table-cell">Assigned To</CTableHeaderCell>
                 <CTableHeaderCell className="hidden md:table-cell">Deadline</CTableHeaderCell>
-                <CTableHeaderCell>Status</CTableHeaderCell>
+                <CTableHeaderCell className="hidden xs:table-cell">Status</CTableHeaderCell>
                 <CTableHeaderCell>Actions</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
               {filteredTasks.map((task) => (
                 <CTableRow key={task.id}>
-                  <CTableDataCell>{task.title}</CTableDataCell>
+                  <CTableDataCell className="sm:max-w-[80px] whitespace-nowrap ">{task.title}</CTableDataCell>
                   <CTableDataCell className="hidden md:table-cell">{task.owner}</CTableDataCell>
                   <CTableDataCell className="hidden md:table-cell">
                     {new Date(task.deadline).toLocaleDateString()}
                   </CTableDataCell>
-                  <CTableDataCell>
-                    <CBadge color={statusColors[task.status] || "secondary"}>
+                  <CTableDataCell className="hidden xs:table-cell">
+                    <CBadge  color={statusColors[task.status] || "secondary"}>
                       {task.status}
                     </CBadge>
                   </CTableDataCell>
-                  <CTableDataCell className="space-x-1">
+                  <CTableDataCell className="space-x-1 whitespace-nowrap">
                     <CButton size="sm" color="info" variant="ghost" onClick={() => openModal("view", task)}><BsEye /></CButton>
                     <CButton size="sm" color="primary" variant="ghost" onClick={() => openModal("edit", task)}><BsPencil /></CButton>
-                    <CButton size="sm" color="danger" variant="ghost" onClick={() => handleRemoveTask(task.id)}><BsTrash /></CButton>
+                    <CButton size="sm" color="danger" variant="ghost" onClick={() => handleRemoveTask(task._id)}><BsTrash /></CButton>
                   </CTableDataCell>
                 </CTableRow>
               ))}
@@ -350,12 +354,12 @@ const TaskTable = () => {
                    <label className="form-label">Assigned To *</label>
                    <CFormSelect
                      value={currentTask.owner}
-                     onChange={() => {
+                     onChange={(e) => {
                        const selectedUser = users.find(user => `${user.name} ${user.surName}` === e.target.value);
                        setCurrentTask({
                          ...currentTask, 
                          owner: e.target.value,
-                         userId: selectedUser?.id || "",
+                         userId: selectedUser?._id || "",
                          departmentId: selectedUser?.departmentId || ""
                        });
                      }}

@@ -3,6 +3,8 @@ import { FaUser, FaEnvelope, FaLock, FaBuilding, FaUserTie, FaCheckCircle } from
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { addNewUser } from '../../../toolkit/userSlice';
+import { departmentApiRequests } from '../../../services/base';
+import { setAllDepartments } from '../../../toolkit/departmentSlice';
 
 const Register = () => {
   const departments = useSelector((state) => state.department.items)
@@ -16,8 +18,15 @@ const Register = () => {
     password: '',
     departmentName: '',
     position: '',
-    role: 'user'
+    role: 'user',
+    isDeleted: false
   });
+  useEffect(() => {
+    departmentApiRequests.getAllDepartments().then(res => {
+      dispatch(setAllDepartments(res))
+    })
+  }, [])
+  
   const handleDepartmentChange = (e) => {
     const selectedDepartment = e.target.value;
     setFormData(prev => ({
@@ -34,11 +43,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const foundUser = users.find((user) => user.email === formData.email)
-    if (foundUser) {
-      toast.error("This email is already in use")
-    }
-    else {
+    
       console.log('Form submitted:', formData);
 
       toast.success('Qeydiyyat uğurla başa çatdı!')
@@ -50,10 +55,10 @@ const Register = () => {
         password: '',
         departmentName: '',
         position: '',
-        role: 'user'
+        role: 'user',
+        isDeleted: false
       });
       dispatch(addNewUser(formData))
-    }
 
   };
 
