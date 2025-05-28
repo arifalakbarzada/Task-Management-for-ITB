@@ -3,7 +3,7 @@ import sendEmail from "../../services/email.js";
 const router = express.Router();
 
 
-router.post("/send", async (req, res) => {
+router.post("/", async (req, res) => {
   const { to, subject, html } = req.body;
 
   const result = await sendEmail(to, subject, html);

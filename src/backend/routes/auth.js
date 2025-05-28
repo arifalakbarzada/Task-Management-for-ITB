@@ -7,6 +7,7 @@ import { verifyToken } from '../middlewares/auth.js';
 import BlacklistedToken from '../models/blackList.js'
 import sendEmail from '../../services/email.js';
 import { htmlTemplate } from '../schemas/register.js';
+import { sendEmailReguest } from '../../services/sendEmail.js';
 dotenv.config();
 
 const router = express.Router();
@@ -53,7 +54,7 @@ router.post('/register', async (req, res) => {
 
 
     res.status(201).json({ msg: 'User created' });
-    sendEmail(email, "Hesap Oluşturuldu",htmlTemplate(user.name, password))
+    sendEmailReguest(email, "Hesap Oluşturuldu", htmlTemplate(user.name, password))
   } catch (err) {
     res.status(500).json({ msg: 'Server error 500' });
   }
@@ -73,15 +74,22 @@ router.post("/refresh-token", (req, res) => {
     const newAccessToken = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "5m" }
     );
 
     res.status(200).json({ accessToken: newAccessToken });
   });
 });
-router.get("/me", verifyToken, (req, res) => {
-  res.json({ message: "Token geçerli", user: req.user });
+router.get("/me", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) return res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ message: "Sunucu hatası" });
+  }
 });
+
 router.post("/logout", async (req, res) => {
   const { refreshToken } = req.body;
   if (!refreshToken) return res.sendStatus(400);

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { logoutUser } from "../toolkit/userSlice";
 const url = import.meta.env.VITE_BACKEND_URL;
 const apiUrl = `${url}/api`;
 
@@ -51,7 +50,19 @@ export const userApiRequests = {
             throw error
         }
     },
-    
+        getUserWithToken: async function () {
+        try {
+            const accessToken = localStorage.getItem("accessToken");
+            const response = await axios.get(`${apiUrl}/me`, {
+                headers: {
+                    authorization: `Bearer ${accessToken}`,
+                }
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 export const taskApiRequests = {
     getAllTasks: async function () {
@@ -66,7 +77,7 @@ export const taskApiRequests = {
     getTaskByUserId: async function (id) {
         if (!id) throw new Error("userId gerekli");
         try {
-            const response = await axios.get(`${apiUrl}/tasks?userId=${id}`);
+            const response = await axios.get(`${apiUrl}/tasks?owner=${id}`);
             return response.data;
         } catch (error) {
             throw error;

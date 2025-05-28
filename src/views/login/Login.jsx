@@ -20,22 +20,12 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const accessToken = localStorage.getItem("accessToken")
     const refreshToken = localStorage.getItem("refreshToken")
-    useEffect(() => {
-        if (accessToken) {
-            const decoded = jwtDecode(accessToken);
-            const userId = decoded.userId;
-            userApiRequests.getUserById(userId).then(res => {
-                dispatch(loginUser(res))
-                navigate("/")
-            })
-        }
-    }, [])
-    
+
     useEffect(() => {
         user?.role === "admin" && navigate("/admin/dashboard")
         user?.role === "user" && navigate("/user/dashboard")
     }, [dispatch])
-    const handleLogin = async (e) =>  {
+    const handleLogin = async (e) => {
         e.preventDefault();
         const userData = {
             email: loginData.email,
@@ -75,6 +65,7 @@ const Login = () => {
                                         required
                                         className="w-full text-sm text-gray-800 border border-gray-300 pl-4 pr-10 py-3 rounded-lg outline-blue-600"
                                         placeholder="E-poct girin "
+                                        autoComplete=""
                                         onChange={(e) => {
                                             setLoginData({
                                                 ...loginData, email: e.target.value
@@ -108,6 +99,7 @@ const Login = () => {
                                         name="password"
                                         type={showPassword ? 'text' : 'password'}
                                         required
+                                        autoComplete="current-password"
                                         className="w-full text-sm text-gray-800 border border-gray-300 pl-4 pr-10 py-3 rounded-lg outline-blue-600"
                                         placeholder="Şifrənizi daxil edin"
                                         onChange={(e) => {

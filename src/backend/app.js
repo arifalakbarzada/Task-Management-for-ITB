@@ -2,13 +2,33 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
-// import swaggerUi from 'swagger-ui-express';
-// import swaggerDocument from './swagger.json' assert { type: 'json' };
 import userRoutes from "./routes/users.js";
 import departmentRoutes from "./routes/departments.js";
 import taskRoutes from "./routes/tasks.js";
 import authRoutes from "./routes/auth.js";
 import emailRoutes from "./routes/email.js";
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Task Management API',
+      version: '1.0.0',
+      description: 'API for managing users, departments, tasks, and authentication.',
+    },
+    servers: [
+      {
+        url: 'http://localhost:5000/api',
+      },
+    ],
+  },
+  apis: ['./routes/*.js'], // API endpoint'lerini tanımladığınız dosyaların yolu
+};
+
+const specs = swaggerJsdoc(options);
+
 
 
 dotenv.config({ path: './.env' });
@@ -29,11 +49,11 @@ startServer();
 const app = express();
 app.use(cors({
   credentials: true,
-  origin: "https://task-management-for-itb.vercel.app",
+  origin: "https://task-management-for-itb.vercel.app/",
 
 }));
 app.get('/cors', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://task-management-for-itb.vercel.app')
+  res.setHeader('Access-Control-Allow-Origin', 'https://task-management-for-itb.vercel.app/');
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -45,8 +65,8 @@ app.use('/api',  authRoutes)
 app.use("/api/users", userRoutes);
 app.use("/api/departments",  departmentRoutes);
 app.use("/api/tasks", taskRoutes);
-app.use("api/email", emailRoutes);
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api/email", emailRoutes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 console.log('Swagger UI: http://localhost:5000/api-docs');
 
 app.listen(5000, () => {

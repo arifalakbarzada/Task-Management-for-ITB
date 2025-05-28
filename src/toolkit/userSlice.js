@@ -15,7 +15,6 @@ export const refreshUser = createAsyncThunk(
       const refreshToken = localStorage.getItem('refreshToken');
       const decoded = jwtDecode(refreshToken);
       const userId = decoded.userId;
-      console.log(decoded)
       const response = await userApiRequests.getUserById(userId);
       return response.data;
     } catch (err) {

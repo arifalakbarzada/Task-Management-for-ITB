@@ -34,17 +34,45 @@ const authSlice = createSlice({
 });
 export const getUserByToken = createAsyncThunk('auth/getUserByToken', async (_, thunkAPI) => {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-    const res = await axios.get(`${apiUrl}/api/me`, {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
+    let accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+
+    let res = null
+
+    try {
+      // İlk olarak access token ile dene
+      res=  await axios.get(`${apiUrl}/api/me`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+    } catch (err) {
+      if (err.response && err.response.status === 403 && refreshToken) {
+        // Token süresi dolmuş → refresh token ile yeni token al
+        const refreshRes = await axios.post(`${apiUrl}/api/refresh-token`, {
+          refreshToken,
+        });
+
+        accessToken = refreshRes.data.accessToken;
+        localStorage.setItem("accessToken", accessToken);
+
+        // Yeni token ile yeniden dene
+        res = await axios.get(`${apiUrl}/api/me`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+      } else {
+        throw err;
       }
-    });
+    }
+
     return res.data;
   } catch (err) {
     return thunkAPI.rejectWithValue(err.response?.data?.message || "Token doğrulama hatası");
   }
 });
+
 export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

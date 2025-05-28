@@ -131,7 +131,7 @@ const TaskView = () => {
         <CModalBody>
           <p><strong>Title:</strong> {viewingTask?.title}</p>
           <p><strong>Description:</strong> {viewingTask?.description}</p>
-          <p><strong>Deadline:</strong> {viewingTask?.deadline}</p>
+          <p className={`${getDeadlineColor(viewingTask?.deadline)}`}><strong>Deadline:</strong> {viewingTask?.deadline}</p>
           <p><strong>Status:</strong> {viewingTask?.status}</p>
         </CModalBody>
         <CModalFooter>

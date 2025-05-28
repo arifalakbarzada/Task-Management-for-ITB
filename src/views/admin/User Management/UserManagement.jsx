@@ -70,7 +70,7 @@ const UserManagement = () => {
         dispatch(removeUser(userId));
         const filteredTasks = tasks.filter((task) => task.userId === userId);
         filteredTasks.forEach((task) => {
-          dispatch(removeTask(task.id));
+          dispatch(removeTask(task._id));
         });
         Swal.fire(
           'Deleted!',
@@ -124,7 +124,7 @@ const UserManagement = () => {
           <CTableBody>
             {users.map((user) => user.role === 'user' && (
               <CTableRow key={user.id}>
-                <CTableDataCell className="table-cell"><span>{user.name}</span></CTableDataCell>
+                <CTableDataCell className="table-cell max-w-[80px] overflow-hidden text-ellipsis whitespace-nowrap"><span>{user.name}</span></CTableDataCell>
                 <CTableDataCell className="hidden xs1:table-cell"><span>{user.surName}</span></CTableDataCell>
                 <CTableDataCell className="hidden xl:table-cell whitespace-nowrap"><span className='text-ellipsis'>{user.departmentName}</span></CTableDataCell>
                 <CTableDataCell className="hidden md:table-cell whitespace-nowrap">{user.email}</CTableDataCell>
@@ -145,7 +145,7 @@ const UserManagement = () => {
                     color="danger"
                     size="sm"
                     className="text-xs  me-1 px-2 py-1"
-                    onClick={() => handleDeleteClick(user.id)}
+                    onClick={() => handleDeleteClick(user._id)}
                   >
                     <FaTrash className="max-[397px]:inline max-[397px]:me-0 text-white hidden" />
                     <span className="max-[397px]:hidden">Delete</span>
@@ -325,12 +325,12 @@ const UserManagement = () => {
           <CModalBody>
             {viewUser && (
               <div className="p-2">
-                <h5 className='whitespace-none'>Name: {viewUser.name}</h5>
-                <h5 className='whitespace-none'>Surname: {viewUser.surName}</h5>
-                <h5 className='whitespace-none'>Father's Name: {viewUser.fatherName}</h5>
-                <h5 className='whitespace-none'>Department: {viewUser.departmentName}</h5>
-                <h5 className='whitespace-none'>Email: {viewUser.email}</h5>
-                <h5 className='whitespace-none'>Position: {viewUser.position}</h5>
+                <p className='whitespace-nowrap font-semibold text-[12px]'>Name: {viewUser.name}</p>
+                <p className='whitespace-nowrap font-semibold text-[12px]'>Surname: {viewUser.surName}</p>
+                <p className='whitespace-nowrap font-semibold text-[12px]'>Father's Name: {viewUser.fatherName}</p>
+                <p className='whitespace-nowrap font-semibold text-[12px]'>Department: {viewUser.departmentName}</p>
+                <p className='whitespace-nowrap font-semibold text-[12px]'>Email: {viewUser.email}</p>
+                <p className='whitespace-nowrap font-semibold text-[12px]'>Position: {viewUser.position}</p>
               </div>
             )}
           </CModalBody>
