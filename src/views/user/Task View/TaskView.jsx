@@ -57,9 +57,9 @@ const TaskView = () => {
   };
 
   const isDeadlinePassed = (deadline) => {
-    const today = new Date();
+    const today = new Date().toISOString();
     const deadlineDate = new Date(deadline);
-    return deadlineDate < today;
+    return deadlineDate <= today;
   };
 
   return (

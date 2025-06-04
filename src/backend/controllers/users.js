@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../models/users.js";
-import { deleteUserSchema, editUserSchema } from "../schemas/editUser.js";
+import { deleteUserSchema, editUserSchema } from "../emails/editUser.js";
 import { sendEmailReguest } from "../../services/sendEmail.js";
 import Task from "../models/tasks.js";
 
@@ -35,8 +35,7 @@ export const updateUser = async (req, res) => {
     if (req.body.isDeleted) {
       const updated = await User.findByIdAndUpdate(req.params, req.body, { new: true });
 
-     await Task.updateMany({ userId: req.params._id }, { isDeleted: true })
-      console.log(await Task.find({userId: req.params._id}))
+      await Task.updateMany({ userId: req.params._id }, { isDeleted: true })
       res.json(updated)
       sendEmailReguest(oldUser.email, "Hesabınız silindi", deleteUserSchema(oldUser))
     }
@@ -80,8 +79,11 @@ export const updateUser = async (req, res) => {
 
 
 export const deleteUser = async (req, res) => {
-  const deleted = await User.findByIdAndUpdate(req.params.id, { isDeleted: true });
-  res.json(deleted);
+  const updated = await User.findByIdAndUpdate(req.params, { isDeleted: true }, { new: true });
+  const user = await User.findOne({_id: req.params})
+  await Task.updateMany({ userId: req.params._id }, { isDeleted: true })
+  res.json(updated)
+  sendEmailReguest(user.email, "Hesabınız silindi", deleteUserSchema(user))
 };
 
 export const loginUser = async (req, res) => {

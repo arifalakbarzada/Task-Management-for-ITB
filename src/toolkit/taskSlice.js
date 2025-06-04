@@ -20,7 +20,7 @@ const taskReducer = createSlice({
         editTaskStatus: (state, action) => {
             const index = state.items.findIndex((item) => item._id === action.payload.id)
             state.items[index].status = action.payload.status
-            taskApiRequests.editTask(action.payload.id, { status: action.payload.status })
+            taskApiRequests.editTask(action.payload._id, { status: action.payload.status })
         },
         addNewTask: (state, action) => {
             state.items.push(action.payload)

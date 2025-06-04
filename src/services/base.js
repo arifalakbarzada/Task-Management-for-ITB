@@ -30,7 +30,7 @@ export const userApiRequests = {
     },
     removeUser: async function (id) {
         try {
-            await axios.patch(`${apiUrl}/users/${id}`, { isDeleted: true })
+            await axios.delete(`${apiUrl}/users/${id}`)
         } catch (error) {
             throw error
         }
@@ -101,7 +101,7 @@ export const taskApiRequests = {
     },
     removeTask: async function (id) {
         try {
-            await axios.patch(`${apiUrl}/tasks/${id}`, { isDeleted: true })
+            await axios.delete(`${apiUrl}/tasks/${id}`)
         } catch (error) {
             throw error
         }
@@ -135,7 +135,7 @@ export const departmentApiRequests = {
     },
     deleteDepartment: async function (depId) {
         try {
-            await axios.patch(`${apiUrl}/departments/${depId}`, { isDeleted: true })
+            await axios.delete(`${apiUrl}/departments/${depId}`)
         } catch (error) {
             throw error
         }

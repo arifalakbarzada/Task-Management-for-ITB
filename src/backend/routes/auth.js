@@ -5,8 +5,7 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { verifyToken } from '../middlewares/auth.js';
 import BlacklistedToken from '../models/blackList.js'
-import sendEmail from '../../services/email.js';
-import { htmlTemplate } from '../schemas/register.js';
+import { htmlTemplate } from '../emails/register.js';
 import { sendEmailReguest } from '../../services/sendEmail.js';
 dotenv.config();
 
@@ -29,10 +28,8 @@ router.post('/login', async (req, res) => {
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
-    console.log(user._id.toString())
     res.json({ user, msg: 'Login successful', accessToken, refreshToken });
   } catch (err) {
-    console.log(user)
     res.status(500).json({ msg: 'Server error 500' });
   }
 });
@@ -72,7 +69,7 @@ router.post("/refresh-token", (req, res) => {
     }
 
     const newAccessToken = jwt.sign(
-      { id: user.id, email: user.email },
+      { userId: user.userId, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "5m" }
     );

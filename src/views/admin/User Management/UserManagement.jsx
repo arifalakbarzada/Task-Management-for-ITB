@@ -68,10 +68,6 @@ const UserManagement = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(removeUser(userId));
-        const filteredTasks = tasks.filter((task) => task.userId === userId);
-        filteredTasks.forEach((task) => {
-          dispatch(removeTask(task._id));
-        });
         Swal.fire(
           'Deleted!',
           'User has been deleted successfully.',

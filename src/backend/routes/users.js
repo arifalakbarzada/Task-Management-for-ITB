@@ -13,7 +13,7 @@ router.get("/", getUsers);
 router.get("/:_id", getUserById);
 router.post("/", createUser);
 router.patch("/:_id", updateUser);
-router.delete("/:id", deleteUser);
+router.delete("/:_id", deleteUser);
 /**
  * @swagger
  * /tasks:

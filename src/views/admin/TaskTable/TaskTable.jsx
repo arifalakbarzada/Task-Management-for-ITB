@@ -163,7 +163,6 @@ const TaskTable = () => {
         isDeleted: false,
         status: "Pending",
       }
-      console.log(newTask)
       dispatch(addNewTask(newTask));
 
     }
@@ -330,8 +329,8 @@ const TaskTable = () => {
             </CTableBody>
           </CTable>
         )}
-        <CPagination className="flex justify-center" aria-label="Page navigation example">
-          <CPaginationItem className="cursor-pointer" onClick={
+        <CPagination className={filteredTasks.length > 0?"flex justify-center": 'hidden opacity-0'} aria-label="Page navigation example">
+          <CPaginationItem className={filteredTasks.length > 0 ?"cursor-pointer" :'hidden'} onClick={
             () => {
               if (currentPage > 0) {
                 setCurrentPage(currentPage - 1);
@@ -344,14 +343,14 @@ const TaskTable = () => {
     getPageNumbers().map((page) => (
       <CPaginationItem
         key={page}
-        className="cursor-pointer"
+        className={filteredTasks.length > 0 ?"cursor-pointer" :'hidden'}
         active={page === currentPage}
         onClick={() => setCurrentPage(page)}
       >
         {page + 1}
       </CPaginationItem>
     ))}
-          <CPaginationItem className="cursor-pointer" onClick={
+          <CPaginationItem className={filteredTasks.length > 0 ?"cursor-pointer" :'hidden'} onClick={
             () => {
               if (currentPage < Math.ceil(filteredTasks.length / paginateNumber) - 1) {
                 setCurrentPage(currentPage + 1);

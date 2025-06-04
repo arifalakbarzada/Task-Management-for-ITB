@@ -2,14 +2,14 @@ import express from 'express';
 import Task from '../models/tasks.js';
 import User from '../models/users.js';
 import mongoose from 'mongoose';
-import { addTaskSchema, updateTaskSchema, updateTaskUserSchema } from '../schemas/task.js';
+import { addTaskSchema, deleteTaskSchema, updateTaskSchema, updateTaskUserSchema } from '../emails/task.js';
 import { sendEmailReguest } from '../../services/sendEmail.js';
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const { departmentId, owner, status} = req.query;
+    const { departmentId, owner, status } = req.query;
     const filter = {
       isDeleted: false,
     };
@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
 
   try {
     const task = req.body;
-    const user = await User.findOne({_id :task.userId});
+    const user = await User.findOne({ _id: task.userId });
     const newTask = new Task(task);
     const savedTask = await newTask.save();
     res.status(201).json(savedTask);
@@ -66,7 +66,7 @@ router.patch('/:id', async (req, res) => {
   if (Object.keys(req.body).length === 0) {
     return res.status(400).json({ message: 'Güncelleme için en az bir alan gereklidir' });
   }
-  
+
 
   try {
     const updatedTask = await Task.findByIdAndUpdate(
@@ -77,25 +77,39 @@ router.patch('/:id', async (req, res) => {
     if (!updatedTask) {
       return res.status(404).json({ message: 'Görev bulunamadı' });
     }
-    if (currentTask.owner !== req.body.owner) {
-    const user = await User.findOne({_id: req.body.userId }); 
-    const currentUser = await User.findOne({_id: currentTask.userId });
-    sendEmailReguest(user.email, 'Görev sahibi güncellendi', updateTaskUserSchema(currentTask,req.body))
-    sendEmailReguest(currentUser.email, 'Görev sahibi güncellendi', updateTaskSchema(currentTask,req.body))
-    
-  }
-  else if (currentTask.isDeleted !== req.body.isDeleted) {
-    const user = await User.findOne({_id: currentTask.userId });
-    sendEmailReguest(user.email, 'Görev Güncellendi', updateTaskSchema(currentTask, req.body))
-  }
-  else{
-    const user  = await User.findOne({_id: currentTask.userId });
-    sendEmailReguest(user.email, 'Görev Güncellendi', updateTaskSchema(currentTask, req.body))
-  }
+    if (currentTask.owner !== req.body.owner && req.body.owner) {
+      const user = await User.findOne({ _id: req.body.userId });
+      const currentUser = await User.findOne({ _id: currentTask.userId });
+      sendEmailReguest(user.email, 'Görev sahibi güncellendi', updateTaskUserSchema(currentTask, req.body))
+      sendEmailReguest(currentUser.email, 'Görev sahibi güncellendi', updateTaskSchema(currentTask, req.body))
+
+    }
+    else {
+      const user = await User.findOne({ _id: currentTask.userId });
+      sendEmailReguest(user.email, 'Görev Güncellendi', updateTaskSchema(currentTask, req.body))
+    }
     res.json(updatedTask);
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Güncelleme hatası', error });
   }
 });
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(
+      id,
+      { $set: {isDeleted : true} },
+      { new: true }
+    );
+    const user = await User.findOne({_id : updatedTask.userId})
+    sendEmailReguest(user.email , 'Görev Silindi' , deleteTaskSchema(updatedTask))
+  }
+  catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Silinme hatası', error });
+  }
+})
 
 export default router;

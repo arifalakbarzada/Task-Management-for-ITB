@@ -49,11 +49,11 @@ startServer();
 const app = express();
 app.use(cors({
   credentials: true,
-  origin: "https://task-management-for-itb.vercel.app",
+  origin: "http://localhost:5173",
 
 }));
 app.get('/cors', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://task-management-for-itb.vercel.app');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
 });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -67,7 +67,6 @@ app.use("/api/departments",  departmentRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/email", emailRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-console.log('Swagger UI: http://localhost:5000/api-docs');
 
 app.listen(5000, () => {
   console.log('Backend çalışıyor: http://localhost:5000');

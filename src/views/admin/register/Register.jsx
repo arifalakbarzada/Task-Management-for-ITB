@@ -41,7 +41,6 @@ const Register = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('Form submitted:', formData);
 
     toast.success('Qeydiyyat uğurla başa çatdı!')
 
